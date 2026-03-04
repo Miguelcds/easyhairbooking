@@ -32,7 +32,11 @@ app.use(express.urlencoded({extended:false}))
 
 
 
+// Probamos Ruta Para Probar Funcionamineto
 
+app.use("/test", (req, res) => {
+    res.status(200).json({test: "Todo Ok "})
+})
 
 
 
