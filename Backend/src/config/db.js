@@ -10,9 +10,14 @@ const connectDB = async () => {
     // Try-Catch para controlar erres De Conexion
 
     try {
-
-        await mongoose.connect()
-    } catch (error) {
+        //Esperamos a establecer conexion con la BBDD y recogemos el archivo de env con dotenv
+        await mongoose.connect(process.env.DB_URL)
+        console.log("Conectado Con la BBDD");
         
+    } catch (error) {
+        console.log("Error al Conectarse con la BBDD");  
     }
 }
+
+
+module.exports = {connectDB}
