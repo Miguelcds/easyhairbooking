@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt"); // Libreria Encriptacion
+let validator = require('validator')
 
 /* 
 * Type:
@@ -12,8 +13,16 @@ const bcrypt = require("bcrypt"); // Libreria Encriptacion
 
 const userSchema = new mongoose.Schema(
   {
-    name: { type: String, trim: true, required: true, minlength: 5 },
-    email: { type: String, trim: true, required: true, unique: true },
+    name: { type: String, trim: true, required: true, minlength: 2 },
+    email: { 
+      type: String,
+      trim: true, 
+      required: true, 
+      unique: true,
+      validate: (value) => {
+        return validator.isEmail(value)
+      }
+    },
     password: {
       type: String,
       trim: true,
