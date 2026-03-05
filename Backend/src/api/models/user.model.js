@@ -30,9 +30,13 @@ const userSchema = new mongoose.Schema(
 );
 
 
-// Funcion Para hashear Contraseña, pendiente Cuando toque
+// Funcion Para hashear Contraseña, Antes de guardar en BD, la contraseña tiene que transformarse en algo ilegible, y eso solo debe pasar si el campo cambió
 
-// userSchema.pre()
+userSchema.pre("save", async function(next){
+  if(!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+})
 
 
 
