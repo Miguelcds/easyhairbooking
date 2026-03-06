@@ -53,6 +53,19 @@ app.use("/test", (req, res) => {
 })
 
 
+// Ruta Test Para Prueba de Middleware isAuth
+
+
+const {isAuth} = require('./src/middlewares/auth.midlleware')
+
+app.use("/api/v1/test-auth", isAuth(), (req, res) => {
+    res.status(200).json({ message: "Ruta protegida OK", user: req.user })
+})
+
+
+
+
+
 // RUTAS // 
 
 

@@ -27,9 +27,11 @@ const isAuth = (allowedRoles = []) => {
       return res.status(401).json("Token inválido o usuario no encontrado");
     }
 
-    // Guardamos la info del usuario en la Peticion
+    // Guardamos la info del usuario en la Peticion, quitando la contraseña
 
-    req.user = user;
+    const {password, ...userWhitoutPassword} = user.toObject();
+
+    req.user = userWhitoutPassword;
 
     // Si hay roles Definidos
 
