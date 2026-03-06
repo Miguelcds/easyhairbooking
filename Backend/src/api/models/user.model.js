@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt"); // Libreria Encriptacion
-let validator = require('validator')
+let validator = require('validator') // Libreria de Validaciones Para Mongoose
 
 /* 
 * Type:
@@ -19,9 +19,12 @@ const userSchema = new mongoose.Schema(
       trim: true, 
       required: true, 
       unique: true,
-      validate: (value) => {
+      validate: {
+       validator: function(value){
         return validator.isEmail(value)
-      }
+      },
+      message: "El Email no tiene el formato correcto"
+      } 
     },
     password: {
       type: String,
@@ -41,10 +44,9 @@ const userSchema = new mongoose.Schema(
 
 // Funcion Para hashear Contraseña, Antes de guardar en BD, la contraseña tiene que transformarse en algo ilegible, y eso solo debe pasar si el campo cambió
 
-userSchema.pre("save", async function(next){
-  if(!this.isModified("password")) return next();
+userSchema.pre("save", async function(){
+  if(!this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, 10);
-  next();
 })
 
 
