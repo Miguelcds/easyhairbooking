@@ -40,7 +40,7 @@ const registerUser = async (req, res) => {
 }
 
 
-const loginUser = async (req, res ) => {
+const loginUser = async (req, res) => {
     try {
 
         // Buscar El Email en el body 
