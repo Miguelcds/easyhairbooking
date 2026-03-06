@@ -17,7 +17,7 @@ const connectDB = async () => {
     } catch (error) {
         console.log("Error al Conectarse con la BBDD"); 
         console.error(error);
-         
+        process.exit(1) // Detengo la aplicacion sin la BBDD no esta funcionado correctamente
     }
 }
 
