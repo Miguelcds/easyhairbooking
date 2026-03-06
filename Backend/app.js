@@ -3,7 +3,7 @@ require("dotenv").config();
 
 
 // Traemos de .env el puerto y lo metemos en una constante
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 
 // Traer el modulo de configuracion de Express
@@ -11,6 +11,10 @@ const PORT = process.env.PORT;
 const express = require("express");
 
 const {connectDB} = require('./src/config/db');
+
+// Para que Permitir el navegador acepte peticines de origenes Diferentes 
+
+const cors = require("cors")
 
 
 // Conectamos la BBDD
@@ -29,6 +33,14 @@ app.use(express.json())
 // 
 
 app.use(express.urlencoded({extended:false}))
+
+
+// Indicamos al navegador que aceptamos las peticiones de la un puerto diferente
+
+
+app.use(cors({
+    origin:process.env.FRONTEND_URL
+}));
 
 
 
