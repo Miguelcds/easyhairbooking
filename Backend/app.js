@@ -22,10 +22,16 @@ const cors = require("cors")
 connectDB();
 
 
-
 // Guardar y ejecutar en una variable la libreria de Express
 
 const app = express();
+
+// Indicamos al navegador que aceptamos las peticiones de la un puerto diferente
+
+app.use(cors({
+    origin:process.env.FRONTEND_URL
+}));
+
 
 // Indicamos a express que use su funcion para trabjar con archivos JSON
 app.use(express.json())
@@ -33,15 +39,6 @@ app.use(express.json())
 // 
 
 app.use(express.urlencoded({extended:false}))
-
-
-// Indicamos al navegador que aceptamos las peticiones de la un puerto diferente
-
-
-app.use(cors({
-    origin:process.env.FRONTEND_URL
-}));
-
 
 
 // Probamos Ruta Para Probar Funcionamineto
