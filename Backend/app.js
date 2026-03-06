@@ -17,6 +17,11 @@ const {connectDB} = require('./src/config/db');
 const cors = require("cors")
 
 
+// Importacion De Rutas
+
+const authRouter = require('./src/api/routes/auth.routes');
+
+
 // Conectamos la BBDD
 
 connectDB();
@@ -46,6 +51,27 @@ app.use(express.urlencoded({extended:false}))
 app.use("/test", (req, res) => {
     res.status(200).json({test: "Todo Ok "})
 })
+
+
+// Ruta Test Para Prueba de Middleware isAuth
+
+
+const {isAuth} = require('./src/middlewares/auth.midlleware')
+
+app.use("/api/v1/test-auth", isAuth(), (req, res) => {
+    res.status(200).json({ message: "Ruta protegida OK", user: req.user })
+})
+
+
+
+
+
+// RUTAS // 
+
+
+// Ruta Auth 
+
+app.use("/api/v1/auth", authRouter )
 
 
 
