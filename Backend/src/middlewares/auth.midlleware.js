@@ -50,38 +50,32 @@ const loginUser = async (req, res) => {
         // Si ya no existe el Email, devolvelos error (ojo, ese error no puede dar pista de si lo que esta mal es el usuario o la contraseña)
 
         if(!user){
-            return res.status(400).json("Constraseña o usuario incorrecto")
+            return res.status(400).json("Contraseña o usuario incorrecto")
         }
 
         // Si lo anterior es Correcto, comparamos la Contraseña con la de la BBDD
 
         const validPassword = await bcrypt.compare(req.body.password, user.password)
 
-        // Si la Constraseña no es correcta Arrojamos el error (ojo, lo mismo que la anterior verficacion, no arrojamos pista de caul de las dos a puesto mal)
+        // Si la Contraseña no es correcta Arrojamos el error (ojo, lo mismo que la anterior verficacion, no arrojamos pista de cuál de las dos a puesto mal)
 
         if(!validPassword){
-            return res.status(400).json("Constraseña o usuario incorrecto")
+            return res.status(400).json("Contraseña o usuario incorrecto")
         }
 
         // Si todo a salido Bien, Generamos un token al Usuario, el cual sera usado en las validaciones de acceso a las rutas
 
         const token = generateToken(user._id, user.role);
 
-        // Devolvemos el Token 
+        // Devolvemos el Token y algunos Datos Basicos
 
-        return res.status(200).json(token)
+        return res.status(200).json({token, user: user.name, email: user.email})
         
     } catch (error) {
         res.status(400).json("Error en el login");
         console.error(error);
     }
 }
-
-
-
-
-
-
 
 
 module.exports ={registerUser, loginUser};
