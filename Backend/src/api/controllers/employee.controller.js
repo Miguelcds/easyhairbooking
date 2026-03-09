@@ -35,6 +35,7 @@ const createEmployee = async (req, res) => {
 };
 
 // PUT Editar Empleado, Solo Para Admin
+// PUT reemplaza el documento completo. El cliente debe enviar todos los campos incluyendo el array completo de specialties actualizado.
 
 const editEmployee = async (req, res) => {
   try {
@@ -56,7 +57,7 @@ const editEmployee = async (req, res) => {
   }
 };
 
-// Activar/ Desactivar Empleado, Solo Admin
+// PATCH Activar/ Desactivar Empleado, Solo Admin
 
 const toggleActiveEmployee = async (req, res) => {
   try {

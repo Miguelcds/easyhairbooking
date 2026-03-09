@@ -17,9 +17,10 @@ const {connectDB} = require('./src/config/db');
 const cors = require("cors")
 
 
-// Importacion De Rutas
+// Importacion De Rutas/Controladores
 
 const authRouter = require('./src/api/routes/auth.routes');
+const employeeRouter = require("./src/api/routes/employee.routes");
 
 
 // Conectamos la BBDD
@@ -56,13 +57,11 @@ app.use("/test", (req, res) => {
 // Ruta Test Para Prueba de Middleware isAuth
 
 
-const {isAuth} = require('./src/middlewares/auth.midlleware')
+const {isAuth} = require('./src/middlewares/auth.middleware');
 
 app.use("/api/v1/test-auth", isAuth(), (req, res) => {
     res.status(200).json({ message: "Ruta protegida OK", user: req.user })
 })
-
-
 
 
 
@@ -72,6 +71,13 @@ app.use("/api/v1/test-auth", isAuth(), (req, res) => {
 // Ruta Auth 
 
 app.use("/api/v1/auth", authRouter )
+
+
+// Ruta Employee
+
+app.use("/api/v1/employee", employeeRouter)
+
+
 
 
 
