@@ -21,6 +21,7 @@ const cors = require("cors")
 
 const authRouter = require('./src/api/routes/auth.routes');
 const employeeRouter = require("./src/api/routes/employee.routes");
+const slotRouter = require("./src/api/routes/slot.routes");
 
 
 // Conectamos la BBDD
@@ -76,6 +77,11 @@ app.use("/api/v1/auth", authRouter )
 // Ruta Employee
 
 app.use("/api/v1/employee", employeeRouter)
+
+
+// Ruta Slot
+
+app.use("/api/v1/slot", slotRouter)
 
 
 
