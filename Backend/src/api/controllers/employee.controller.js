@@ -86,4 +86,4 @@ const toggleActiveEmployee = async (req, res) => {
   }
 };
 
-module.exports = {getEmployees, createEmployee, editEmployee, toggleActiveEmployee}
+module.exports = {getEmployees, createEmployee, editEmployee, toggleActiveEmployee};
