@@ -24,34 +24,66 @@ const getSlots = async (req, res) => {
     }
 
     res.status(200).json(availableSlot);
-
   } catch (error) {
-    res.status(500).json({error: "Error Obteniendo todos los usuarios"});
+    res.status(500).json({ error: "Error Obteniendo todos los usuarios" });
     console.log(error);
-    
-
   }
 };
 
-
-
 // Creacion De SLots
 
-
 const createSlot = async (req, res) => {
-    try {
-        const slot = new Slot(req.body);
+  try {
+    const slot = new Slot(req.body);
 
-        const createSlot = await slot.save();
+    const createSlot = await slot.save();
 
-        res.status(201).json(createSlot)
-        
-    } catch (error) {
-        res.status(400).json({ error: "Error Creando el Slot"})
-        console.log(error);
-        
+    res.status(201).json(createSlot);
+  } catch (error) {
+    res.status(400).json({ error: "Error Creando el Slot" });
+    console.log(error);
+  }
+};
+
+const autoCreateSlot = async (req, res) => {
+  try {
+    const { employee_id, date, intervalMinutes, shifts } = req.body;
+
+    const slots = [];
+
+    for (let i = 0; i < shifts.length; i++) {
+
+      let actualHour = shifts[i].start.split(":");
+
+      actualHour = +actualHour[0] * 60 + +actualHour[1];
+
+      let endHour = shifts[i].end.split(":");
+
+      endHour = +endHour[0] * 60 + +endHour[1];
+
+      while (actualHour < endHour) {
+        let hour = String(Math.floor(actualHour / 60)).padStart(2, 0);
+
+        let minutes = String(actualHour % 60).padStart(2, 0);
+
+        let finalHour = `${hour}:${minutes}`;
+
+        slots.push({ employee_id, date, hour: finalHour });
+
+        actualHour += intervalMinutes;
+      }
     }
-}
+
+    await Slot.insertMany(slots);
+
+    res.status(201).json("Todos los Slots Se han creado correctamente");
+
+  } catch (error) {
+    res.status(400).json({ error: "Error Creando el Slots" });
+    console.log(error);
+  }
+};
+
+module.exports = { getSlots, createSlot };
 
 
-module.exports = {getSlots, createSlot}
