@@ -84,6 +84,6 @@ const autoCreateSlot = async (req, res) => {
   }
 };
 
-module.exports = { getSlots, createSlot };
+module.exports = { getSlots, createSlot, autoCreateSlot };
 
 
