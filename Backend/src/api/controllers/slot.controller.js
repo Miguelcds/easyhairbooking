@@ -45,6 +45,20 @@ const createSlot = async (req, res) => {
   }
 };
 
+
+/*  Para la introduccion de Datos De forma incremental
+{
+  "employee_id": "id_empleado",
+  "date": "2026-04-02",
+  "intervalMinutes": 45,
+  "shifts": [
+    { "start": "09:00", "end": "13:30" },
+    { "start": "16:00", "end": "19:00" }
+  ]
+}
+
+*/
+
 const autoCreateSlot = async (req, res) => {
   try {
     const { employee_id, date, intervalMinutes, shifts } = req.body;
@@ -53,7 +67,13 @@ const autoCreateSlot = async (req, res) => {
 
     for (let i = 0; i < shifts.length; i++) {
 
+      // Serpara las horas y los minutos  ["09","00"]
+
       let actualHour = shifts[i].start.split(":");
+
+      // Convierte la hora en mintuos calculados, siendo las 00:00 el punto de partida Ej --> 
+      // Las 09:00 -->  09 * 60 + 00 --> 540 minutos
+      // Las 0
 
       actualHour = +actualHour[0] * 60 + +actualHour[1];
 
