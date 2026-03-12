@@ -96,4 +96,7 @@ const changeAppointment = async (req, res) => {
 };
 
 
+C
+
+
 module.exports = {bookAppointment, changeAppointment};
