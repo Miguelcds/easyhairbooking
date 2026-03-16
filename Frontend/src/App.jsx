@@ -6,6 +6,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Admin from "./pages/Admin.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
+import PublicRoute from "./components/PublicRoute.jsx";
 
 function App() {
   return (
@@ -19,16 +20,17 @@ function App() {
           </PrivateRoute>
         }
       />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+      <Route path="/register" element={<PublicRoute><Register/></PublicRoute>} />
       <Route
         path="/admin"
         element={
-          <PrivateRoute>
+          <PrivateRoute allowedRoles={["admin"]}>
             <Admin />
           </PrivateRoute>
         }
       />
+      <Route path="*" element={<h1>Route Not Found</h1>}/>
     </Routes>
   );
 }
