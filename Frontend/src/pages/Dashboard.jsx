@@ -2,7 +2,14 @@ import React from 'react'
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <div>
+      <h1>Dasboard</h1>
+      <h2>Bienvenido, Aqui ira el nombre de la persona ➡️ {} </h2>
+
+      <h3>Si estas aqui es porque has iniciado sesion !</h3>
+
+
+    </div>
   )
 }
 
