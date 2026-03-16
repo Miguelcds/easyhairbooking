@@ -17,7 +17,7 @@ export const registerService = async (userData) => {
 export const loginService = async (userData) => {
     try {
         if(userData === null ){
-            throw new Error("No ha datos de usuario con los que puedas Loggearte");
+            throw new Error("No hay datos de usuario con los que puedas Iniciar Sesion");
         }
         const result = await axiosClient.post("/auth/login", userData);
         return result.data;
