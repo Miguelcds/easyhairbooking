@@ -31,7 +31,7 @@ const Login = () => {
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
-      setErrorMsg(error.response?.data?.error || "Algo ha salido mal 💔");
+      setErrorMsg(error.response?.data || "Algo ha salido mal 💔");
     }
   };
 
@@ -48,7 +48,7 @@ const Login = () => {
             type="email"
             id="email"
             {...register("email", {
-              required: "No has introducido Ningun email",
+              required: "No has introducido ningun email",
               pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                   message: "El formato introducido de email es incorrecto, por favor, introducelo correctamente",
@@ -65,7 +65,7 @@ const Login = () => {
             type="password"
             id="password"
             {...register("password", {
-              required: "No has introducido Ninguna contraseña",
+              required: "No has introducido ninguna contraseña",
             })}
           />
           {errors.password && (
