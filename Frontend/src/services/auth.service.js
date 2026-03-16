@@ -27,3 +27,9 @@ export const loginService = async (userData) => {
         throw error;
     }
 }
+
+
+export const getMeService = async () => {
+    const result = await axiosClient.get("/auth/me")
+    return result.data
+}
