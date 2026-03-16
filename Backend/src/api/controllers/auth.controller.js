@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 
 const {generateToken} = require('../../utils/token')
 
-
 // Registrar Usuario
 
 
@@ -67,9 +66,20 @@ const loginUser = async (req, res) => {
 
         const token = generateToken(user._id, user.role);
 
+
+        // Potegemos el Token para mandarlo mediante una cookie 
+
+        res.cookie("token", token, {
+            httpOnly:true,
+            secure: false, // En desarrolo false, en produccion true
+            sameSite: "strict",
+            maxAge: 2 * 24 * 60 * 60 * 1000 // 2 dias
+
+        })
+
         // Devolvemos el Token y algunos Datos Basicos
 
-        return res.status(200).json({token, user: user.name, email: user.email})
+        return res.status(200).json({user: user.name, email: user.email})
         
     } catch (error) {
         res.status(400).json("Error en el login");

@@ -1,6 +1,9 @@
 // Traer Libreria Dotenv para acceder a variables de entorno, como la del .env, es decir, importar y arrancar
 require("dotenv").config();
 
+// Traer e intanciar Libreria de cookie parser
+const cookieParser = require("cookie-parser");
+
 
 // Traemos de .env el puerto y lo metemos en una constante
 const PORT = process.env.PORT || 3000;
@@ -37,7 +40,8 @@ const app = express();
 // Indicamos al navegador que aceptamos las peticiones de la un puerto diferente
 
 app.use(cors({
-    origin:process.env.FRONTEND_URL
+    origin:process.env.FRONTEND_URL,
+    credentials:true
 }));
 
 
@@ -47,6 +51,10 @@ app.use(express.json())
 // 
 
 app.use(express.urlencoded({extended:false}))
+
+// Usos CookieParser para seguridad de usuarios y evitar cualquier ataque XSS
+
+app.use(cookieParser())
 
 
 // Probamos Ruta Para Probar Funcionamineto
@@ -59,6 +67,7 @@ app.use("/test", (req, res) => {
 // Ruta Test Para Prueba de Middleware isAuth
 
 const {isAuth} = require('./src/middlewares/auth.middleware');
+
 
 
 app.use("/api/v1/test-auth", isAuth(), (req, res) => {
