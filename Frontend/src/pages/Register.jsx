@@ -165,24 +165,6 @@ const Register = () => {
 
 export default Register;
 
-/*
-name: Pedro Perez
 
-contraseña: PedroPorro11
-
-correo: pedro@hotmail.com
-
-
-*/
-
-/*
-name: Paco Perez
-
-contraseña: PocoPorro11
-
-correo: paco@hotmail.com
-
-
-*/
 
 
