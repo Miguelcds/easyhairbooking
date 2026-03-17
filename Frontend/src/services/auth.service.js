@@ -33,3 +33,12 @@ export const getMeService = async () => {
     const result = await axiosClient.get("/auth/me")
     return result.data
 }
+
+// Servicio Para Realizar la eliminacion del token y cerrar sesion con ello
+
+export const logoutService = async () => {
+
+  const result = await axiosClient.post("/auth/logout") 
+  return result.data
+
+}

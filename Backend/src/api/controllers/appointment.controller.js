@@ -38,11 +38,12 @@ const bookAppointment = async (req, res) => {
 
     await appointment.save({ session });
 
+    await session.commitTransaction();
     res
       .status(201)
       .json({ "Cita Creada con los siguientes datos: ": appointment });
 
-    await session.commitTransaction();
+    
   } catch (error) {
     await session.abortTransaction();
     res.status(500).json({ error: "Error Creando la Cita" });

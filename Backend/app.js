@@ -99,9 +99,6 @@ app.use("/api/v1/appointment", appointmentRouter)
 
 
 
-
-
-
 // Las Rutas Sin Respuesta Seran Redirigidas
 
 app.use((req,res) => {

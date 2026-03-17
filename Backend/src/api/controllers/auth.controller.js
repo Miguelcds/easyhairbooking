@@ -86,6 +86,15 @@ const loginUser = async (req, res) => {
 
 const getMe = async (req, res) => {
   res.status(200).json(req.user);
+  res.status(200).json("Sesion cerrada correctamente")
 };
 
-module.exports = { registerUser, loginUser , getMe};
+
+// Logout Para cerrar sesion
+
+const logoutUser = (req, res) => {
+  res.clearCookie("token")
+  res.status(200).json("Sesión cerrada correctamente")
+}
+
+module.exports = { registerUser, loginUser , getMe, logoutUser};

@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 
-import { getMeService } from "../services/auth.service";
+import { getMeService, logoutService } from "../services/auth.service";
 
 const AuthContext = createContext();
 
@@ -31,8 +31,9 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(userData));
   };
 
-  const logout = () => {
-    setUser(null);
+  const logout = async () => {
+    await logoutService()
+    setUser(null)
     localStorage.removeItem("user");
   };
 
