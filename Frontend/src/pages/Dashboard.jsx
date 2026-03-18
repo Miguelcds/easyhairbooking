@@ -12,6 +12,8 @@ const Dashboard = () => {
     navigate("/login")
   }
 
+  
+
 
   return (
     <div>
@@ -21,6 +23,8 @@ const Dashboard = () => {
       <h3>Si estas aqui es porque has iniciado sesion !</h3>
 
       <button onClick={handleLogout}>Logout</button>
+
+      <button onClick={()=> navigate("/employees")}>Citas Disponibles</button>
 
 
     </div>

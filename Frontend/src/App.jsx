@@ -7,6 +7,7 @@ import Register from "./pages/Register.jsx";
 import Admin from "./pages/Admin.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import PublicRoute from "./components/PublicRoute.jsx";
+import Employees from "./pages/Employees.jsx";
 
 function App() {
   return (
@@ -27,6 +28,14 @@ function App() {
         element={
           <PrivateRoute allowedRoles={["admin"]}>
             <Admin />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/employees"
+        element={
+          <PrivateRoute >
+            <Employees allowedRoles={["admin", "client"]}/>
           </PrivateRoute>
         }
       />
