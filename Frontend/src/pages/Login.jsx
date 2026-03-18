@@ -21,12 +21,12 @@ const Login = () => {
 
   const submit = async (data) => {
     try {
-      const { token, ...userData } = await loginService({
+      const userData = await loginService({
         email: data.email,
         password: data.password,
       });
 
-      login(userData, token);
+      login(userData);
 
       navigate("/dashboard");
     } catch (error) {

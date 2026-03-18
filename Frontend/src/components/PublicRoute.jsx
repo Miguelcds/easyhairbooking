@@ -4,9 +4,9 @@ import { Navigate } from 'react-router-dom'
 
 const PublicRoute = ({children}) => {
 
-    const { token } = useAuth()
+    const { user } = useAuth()
   
-  if (token) {
+  if (user) {
     return <Navigate to="/dashboard" />
   }
   
