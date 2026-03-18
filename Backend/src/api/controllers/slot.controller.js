@@ -20,7 +20,7 @@ const getSlots = async (req, res) => {
     });
 
     if (!availableSlot.length) {
-      return res.status(404).json({ error: "No hay Slots Disponibles" });
+      return res.status(404).json({ error: "No hay citas Disponibles para el dia seleccionado, disculpe las molestias" });
     }
 
     res.status(200).json(availableSlot);

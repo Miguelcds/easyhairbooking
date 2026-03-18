@@ -1,21 +1,15 @@
 import axiosClient from "./axios.config";
 
 /* 
-
 Recuerda! La Respuesta de Axios es:
-
 result = {
-  data: [...],        // ← la respuesta real del servidor
+  data: [...], ← la respuesta real del servidor
   status: 200,
   headers: {...},
   config: {...}
 }
-
-
 Por eso cogemos result.data 
-
 */
-
 
 export const getEmployeesService = async () => {
 
@@ -28,6 +22,11 @@ export const getEmployeesService = async () => {
     }
 
 }
+
+
+
+
+
 
 
 

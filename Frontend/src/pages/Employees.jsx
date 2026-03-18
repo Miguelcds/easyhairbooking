@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { getEmployeesService } from "../services/employee.service";
+import { useNavigate } from "react-router-dom";
 
 const Employees = () => {
   const [employees, setEmployee] = useState([]);
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const data = async () => {
@@ -26,6 +29,7 @@ const Employees = () => {
             {emplo.specialty.map((esp, i) => (
               <span key={i}>Especialidades: {esp} </span>
             ))}
+            <button onClick={() => navigate(`/slots/${emplo._id}`, {state: {name: emplo.name}})}>Ver disponibilidad</button>
           </li>
         ))}
       </ul>
