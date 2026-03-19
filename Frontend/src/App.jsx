@@ -9,6 +9,7 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import PublicRoute from "./components/PublicRoute.jsx";
 import Employees from "./pages/Employees.jsx";
 import Slots from "./pages/Slots.jsx";
+import Book from "./pages/Book.jsx";
 
 function App() {
   return (
@@ -59,6 +60,14 @@ function App() {
         element={
           <PrivateRoute>
             <Slots />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/book/:slotId"
+        element={
+          <PrivateRoute>
+            <Book/>
           </PrivateRoute>
         }
       />

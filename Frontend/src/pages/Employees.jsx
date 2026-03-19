@@ -28,7 +28,7 @@ const Employees = () => {
             <h3>{emplo.name}</h3>
             {emplo.specialty.map((esp, i) => (
               <span key={i}>Especialidades: {esp} </span>
-            ))}
+            ))}                                                     {/*Envia el  */}
             <button onClick={() => navigate(`/slots/${emplo._id}`, {state: {name: emplo.name}})}>Ver disponibilidad</button>
           </li>
         ))}

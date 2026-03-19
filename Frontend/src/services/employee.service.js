@@ -18,7 +18,8 @@ export const getEmployeesService = async () => {
        return result.data
 
     } catch (error) {
-        console.error(error);  
+        console.error(error);
+        throw error  
     }
 
 }
