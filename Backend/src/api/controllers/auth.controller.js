@@ -75,7 +75,7 @@ const loginUser = async (req, res) => {
 
     // Devolvemos algunos Datos Basicos : Nombre Usuario, el email y el rol
 
-    return res.status(200).json({ user: user.name, email: user.email, role: user.role });
+    return res.status(200).json({ name: user.name, email: user.email, role: user.role });
   } catch (error) {
     res.status(400).json("Error en el login");
     console.error(error);

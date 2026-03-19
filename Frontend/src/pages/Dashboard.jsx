@@ -35,6 +35,8 @@ const Dashboard = () => {
   }, []);
 
   const handleCancel = async (appointment) => {
+    const confirm = window.confirm("¿Estás seguro de que quieres cancelar esta cita?")
+    if (!confirm) return
     try {
       await cancelAppointmentService(appointment._id, {
         slot_id: appointment.slot_id._id,
@@ -46,6 +48,8 @@ const Dashboard = () => {
       console.error(error);
     }
   };
+
+  const activeDates = dates.filter(e => e.state !== "cancelled")
 
   return (
     <div>
@@ -59,7 +63,7 @@ const Dashboard = () => {
       </section>
       <section>
         <h3>Citas</h3>
-        {dates.length > 0 ? (
+        {activeDates.length > 0  ? (
           <ul>
             {dates.filter(e => e.state !== "cancelled").map((e) => (
               <li key={e._id}>
