@@ -18,7 +18,7 @@ const bookAppointment = async (req, res) => {
     const actualState = await Slot.findById(slot_id, null, { session });
 
     if (!actualState.isAvailable) {
-      return res.status(400).json("La Reserva ya no esta disponible");
+      return res.status(400).json({error:"La Reserva ya no esta disponible"});
     }
 
     const slot = await Slot.findByIdAndUpdate(

@@ -12,7 +12,8 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const verify = async () => {
       try {
-        await getMeService();
+        const data = await getMeService();
+        setUser(data) // Seteo el user con el data en este momento, por si modifican el localStorage manualmente, no pedan acceder a endpoits de Admin (Igualmente no podrian obtener informacion del server, solo accederiana la parte visual)
       } catch (error) { // En caso de que hubiera expirado elimino todos los datos del local storage para no iniciar sesion
         localStorage.removeItem("user"); 
         setUser(null);
@@ -24,7 +25,9 @@ export const AuthProvider = ({ children }) => {
 
   /* 
     Para la persistencia del token se ha utilizado httpOnly cookies, para prevenir ataques XSS
-    */
+    Se almacenara datos de caracter poco relevante en el Local Storage.
+
+  */
 
   const login = (userData) => {
     setUser(userData);

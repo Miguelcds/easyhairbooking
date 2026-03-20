@@ -7,6 +7,9 @@ import Register from "./pages/Register.jsx";
 import Admin from "./pages/Admin.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import PublicRoute from "./components/PublicRoute.jsx";
+import Employees from "./pages/Employees.jsx";
+import Slots from "./pages/Slots.jsx";
+import Book from "./pages/Book.jsx";
 
 function App() {
   return (
@@ -20,8 +23,22 @@ function App() {
           </PrivateRoute>
         }
       />
-      <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-      <Route path="/register" element={<PublicRoute><Register/></PublicRoute>} />
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        }
+      />
       <Route
         path="/admin"
         element={
@@ -30,7 +47,31 @@ function App() {
           </PrivateRoute>
         }
       />
-      <Route path="*" element={<h1>Route Not Found</h1>}/>
+      <Route
+        path="/employees"
+        element={
+          <PrivateRoute>
+            <Employees allowedRoles={["admin", "client"]} />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/slots/:employeeId"
+        element={
+          <PrivateRoute>
+            <Slots />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/book/:slotId"
+        element={
+          <PrivateRoute>
+            <Book/>
+          </PrivateRoute>
+        }
+      />
+      <Route path="*" element={<h1>Route Not Found</h1>} />
     </Routes>
   );
 }

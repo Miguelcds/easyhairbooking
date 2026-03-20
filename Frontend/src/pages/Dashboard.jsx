@@ -1,30 +1,89 @@
-import { useAuth } from '../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import {
+  getMyAppointmentsService,
+  cancelAppointmentService,
+} from "../services/appointment.service";
 
 const Dashboard = () => {
+  const { logout, user } = useAuth();
 
-  const {logout} = useAuth()
+  const [dates, setDates] = useState([]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await logout()
-    navigate("/login")
-  }
+    await logout();
+    navigate("/login");
+  };
 
+  useEffect(() => {
+    const avaliableDates = async () => {
+      try {
+        const result = await getMyAppointmentsService();
+
+        setDates(result);
+
+        return;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    avaliableDates();
+  }, []);
+
+  const handleCancel = async (appointment) => {
+    const confirm = window.confirm("¿Estás seguro de que quieres cancelar esta cita?")
+    if (!confirm) return
+    try {
+      await cancelAppointmentService(appointment._id, {
+        slot_id: appointment.slot_id._id,
+      });
+
+      const result = await getMyAppointmentsService();
+      setDates(result);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const activeDates = dates.filter(e => e.state !== "cancelled")
 
   return (
     <div>
       <h1>Dasboard</h1>
-      <h2>Bienvenido, Aqui irá el nombre de la persona ➡️ {} </h2>
-
-      <h3>Si estas aqui es porque has iniciado sesion !</h3>
-
-      <button onClick={handleLogout}>Logout</button>
-
-
+      <h2>Bienvenido, {user.name} </h2>
+      <section>
+        <button onClick={handleLogout}>Logout</button>
+        <button onClick={() => navigate("/employees")}>
+          Citas Disponibles
+        </button>
+      </section>
+      <section>
+        <h3>Citas</h3>
+        {activeDates.length > 0  ? (
+          <ul>
+            {dates.filter(e => e.state !== "cancelled").map((e) => (
+              <li key={e._id}>
+                <p>
+                  Fecha: {new Date(e.slot_id.date).toLocaleDateString("es-ES")}
+                </p>
+                <p>Hora: {e.slot_id.hour} </p>
+                <p>Servivio: {e.service}</p>
+                <p>Precio Estimado: {e.price}</p>
+                <p>Estado: {e.state}</p>
+                <button onClick={() => handleCancel(e)}>Cancelar</button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No Tienes Citas Por el Momento</p>
+        )}
+      </section>
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

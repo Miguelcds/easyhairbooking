@@ -73,9 +73,9 @@ const loginUser = async (req, res) => {
       maxAge: 2 * 24 * 60 * 60 * 1000, // 2 dias
     });
 
-    // Devolvemos algunos Datos Basicos
+    // Devolvemos algunos Datos Basicos : Nombre Usuario, el email y el rol
 
-    return res.status(200).json({ user: user.name, email: user.email });
+    return res.status(200).json({ name: user.name, email: user.email, role: user.role });
   } catch (error) {
     res.status(400).json("Error en el login");
     console.error(error);
