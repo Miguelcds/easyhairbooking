@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import {
   getMyAppointmentsService,
-  cancelAppointmentService,
+  changeAppointmentService,
 } from "../services/appointment.service";
 
 const Dashboard = () => {
@@ -19,7 +19,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    const avaliableDates = async () => {
+    const myDates = async () => {
       try {
         const result = await getMyAppointmentsService();
 
@@ -31,14 +31,14 @@ const Dashboard = () => {
       }
     };
 
-    avaliableDates();
+    myDates();
   }, []);
 
   const handleCancel = async (appointment) => {
     const confirm = window.confirm("¿Estás seguro de que quieres cancelar esta cita?")
     if (!confirm) return
     try {
-      await cancelAppointmentService(appointment._id, {
+      await changeAppointmentService(appointment._id, {
         slot_id: appointment.slot_id._id,
       });
 

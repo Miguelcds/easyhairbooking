@@ -21,7 +21,9 @@ export const getMyAppointmentsService = async () => {
   }
 };
 
-export const cancelAppointmentService = async (id, appointmentData) => {
+// Sirve Para Cancelar citas en el User y Aprobar - cancelar citas al Admin
+
+export const changeAppointmentService = async (id, appointmentData) => {
   try {
     const result = await axiosClient.patch(`/appointment/${id}`, appointmentData)
 
@@ -32,5 +34,19 @@ export const cancelAppointmentService = async (id, appointmentData) => {
     throw error
     
     
+  }
+}
+
+// Devuelve Todas Las citas al Admin
+
+export const getAdminAppointmentsService = async () => {
+  try {
+     const result = await axiosClient.get(`/appointment`)
+
+     return result.data
+    
+  } catch (error) {
+    console.error(error);
+    throw error
   }
 }
