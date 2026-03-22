@@ -10,6 +10,7 @@ import PublicRoute from "./components/PublicRoute.jsx";
 import Employees from "./pages/Employees.jsx";
 import Slots from "./pages/Slots.jsx";
 import Book from "./pages/Book.jsx";
+import AdminEmployees from "./pages/AdminEmployees.jsx";
 
 function App() {
   return (
@@ -71,6 +72,16 @@ function App() {
           </PrivateRoute>
         }
       />
+      <Route
+        path="/adminEmpoyees"
+        element={
+          <PrivateRoute allowedRoles={["admin"]}>
+            <AdminEmployees/>
+          </PrivateRoute>
+        }
+      />
+      
+    
       <Route path="*" element={<h1>Route Not Found</h1>} />
     </Routes>
   );

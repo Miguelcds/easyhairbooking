@@ -7,7 +7,7 @@ import {
 } from "../services/appointment.service";
 
 const Admin = () => {
-  const { logout, user } = useAuth();
+  const { logout} = useAuth();
 
   const handleLogout = async () => {
     await logout();
@@ -31,7 +31,7 @@ const Admin = () => {
     allDate();
     const interval = setInterval(allDate, 30000); // cada 30 segundos se refresca la pagina
     return () => clearInterval(interval); // limpiar al desmontar
-    // En futuras versiones se plantea sustituir el polling por WebSockets para notificaciones en tiempo real.
+    // En futuras versiones se plantea sustituir el polling por WebSockets para notificaciones en tiempo real. 
   }, []);
 
   const activeDates = dates.filter(
@@ -134,8 +134,8 @@ const Admin = () => {
       </section>
 
       <section>
-        <h3>Gestiona Tus Empleado - Altas - Bajas </h3>
-        <button onClick={() => navigate("/")}>Gestion Empleados</button>
+        <h3>Gestiona Tus Empleado - Altas - Bajas - Ediciones </h3>
+        <button onClick={() => navigate("/adminEmpoyees")}>Gestion Empleados</button>
       </section>
     </>
   );
