@@ -39,7 +39,7 @@ const AdminEmployees = () => {
     getEmployees();
   }, []);
 
-  // Para crear
+  // Formulario Para crear Nuevos Empleados
   const {
     register: registerCreate,
     handleSubmit: handleCreate,
@@ -49,7 +49,7 @@ const AdminEmployees = () => {
     defaultValues: { name: "", specialty: "" },
   });
 
-  // Para editar
+  // Formulario Para editar Empleado
   const {
     register: registerEdit,
     handleSubmit: handleEdit,

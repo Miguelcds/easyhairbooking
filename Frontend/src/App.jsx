@@ -11,6 +11,7 @@ import Employees from "./pages/Employees.jsx";
 import Slots from "./pages/Slots.jsx";
 import Book from "./pages/Book.jsx";
 import AdminEmployees from "./pages/AdminEmployees.jsx";
+import AdminSlots from "./pages/AdminSlots.jsx";
 
 function App() {
   return (
@@ -73,10 +74,18 @@ function App() {
         }
       />
       <Route
-        path="/adminEmpoyees"
+        path="/admin/employees"
         element={
           <PrivateRoute allowedRoles={["admin"]}>
             <AdminEmployees/>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/admin/slots"
+        element={
+          <PrivateRoute allowedRoles={["admin"]}>
+            <AdminSlots/>
           </PrivateRoute>
         }
       />
