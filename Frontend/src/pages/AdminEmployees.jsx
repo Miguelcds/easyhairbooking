@@ -9,13 +9,23 @@ import {
   getEmployeesService,
 } from "../services/employee.service";
 
-
 const AdminEmployees = () => {
   const [errorMsg, setErrorMsg] = useState(null);
 
   const [success, setSuccess] = useState("");
 
   const [employees, setEmployees] = useState([]);
+
+  const [editingEmployee, setEditingEmployee] = useState(null);
+
+  const refreshEmployees = async () => {
+    try {
+      const result = await getEmployeesService();
+      setEmployees(result);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     const getEmployees = async () => {
@@ -29,17 +39,24 @@ const AdminEmployees = () => {
     getEmployees();
   }, []);
 
+  // Para crear
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
+    register: registerCreate,
+    handleSubmit: handleCreate,
+    formState: { errors: errorsCreate },
+    reset: resetCreate,
   } = useForm({
-    defaultValues: {
-      name: "",
-      specialty: [],
-      active: true,
-    },
+    defaultValues: { name: "", specialty: "" },
+  });
+
+  // Para editar
+  const {
+    register: registerEdit,
+    handleSubmit: handleEdit,
+    formState: { errors: errorsEdit },
+    reset: resetEdit,
+  } = useForm({
+    defaultValues: { name: "", specialty: "" },
   });
 
   const createSubmit = async (data) => {
@@ -50,27 +67,33 @@ const AdminEmployees = () => {
         active: true,
       });
       setSuccess("create");
-      reset();
-      const result = await getEmployeesService();
-      setEmployees(result);
+      resetCreate();
+      refreshEmployees();
     } catch (error) {
       console.error(error);
       setErrorMsg(error.response?.data?.error || "Algo ha salido mal 💔");
     }
   };
 
-  // Edicion Empleado, FAlta implementar
+  // Edicion Empleado
 
   const editSubmit = async (data) => {
+    const confirm = window.confirm(
+      "¿Estás seguro de que quieres editar a este empleado?",
+    );
+    if (!confirm) return;
     try {
-      await editEmployeeService({
-        id: data._id,
-        name: data.name,
-        spcialty: data.specialty,
-        active: true,
+      await editEmployeeService(editingEmployee.id, {
+        name: data.name || editingEmployee.name,
+        specialty: data.specialty
+          ? data.specialty.split(",").map((s) => s.trim())
+          : editingEmployee.specialty,
       });
       setErrorMsg(null);
       setSuccess("edit");
+      resetEdit()
+      setEditingEmployee(null);
+      refreshEmployees();
     } catch (error) {
       console.error(error);
       setErrorMsg(error.response?.data?.error || "Algo ha salido mal 💔");
@@ -78,12 +101,17 @@ const AdminEmployees = () => {
   };
 
   const toggleEmployee = async (id) => {
+    const confirm = window.confirm(
+      "¿Estás seguro de que quieres cambiar de estado al Empleado?",
+    );
+    if (!confirm) return;
+
+
     try {
       await toggleEmployeeService(id);
       setErrorMsg(null);
       setSuccess("change");
-      const result = await getEmployeesService();
-      setEmployees(result);
+      refreshEmployees();
     } catch (error) {
       console.error(error);
       setErrorMsg(error.response?.data?.error || "Algo ha salido mal 💔");
@@ -115,13 +143,21 @@ const AdminEmployees = () => {
               {employees.map((e) => (
                 <li key={e._id}>
                   <p>Nombre: {e.name}</p>
-                  <p>Estado: {e.active ? <p>En Activo</p> : <p>De Baja</p>}</p>
+                  <p>Estado: {e.active ? <span>En Activo</span> : <span>De Baja</span>}</p>
                   <button onClick={() => toggleEmployee(e._id)}>
                     Cambiar Estado
                   </button>
-                  <button onClick={() => {
-                    
-                  }}>Editar </button>
+                  <button
+                    onClick={() => {
+                      setEditingEmployee({
+                        id: e._id,
+                        name: e.name,
+                        specialty: e.specialty,
+                      });
+                    }}
+                  >
+                    Editar{" "}
+                  </button>
                 </li>
               ))}
             </ul>
@@ -132,9 +168,78 @@ const AdminEmployees = () => {
         )}
       </section>
 
+      {/* Formulario Para Edicion De Empleados */}
+
+      {editingEmployee && (
+        <section>
+          <form onSubmit={handleEdit(editSubmit)}>
+            <label htmlFor="name">
+              Nombre Acutal Usuario:
+              <p>{editingEmployee.name} </p>
+              <p>Nuevo Nombre:</p>
+              <input
+                placeholder="Alex Garcia..."
+                type="text"
+                id="name"
+                {...registerEdit("name", {
+                  //required: "El nombre es Obligatorio",
+                  minLength: {
+                    value: 2,
+                    message: "Debe tener al menos 2 caracteres",
+                  },
+                  pattern: {
+                    value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/,
+                    message: "No puede contener Numeros",
+                  },
+                  validate: (value) =>
+                    value.trim().length >= 2 || "No pueden ser solo espacios",
+                })}
+              />
+              <br />
+              {errorsEdit.name && (
+                <p style={{ color: "red" }}> {errorsEdit.name.message}</p>
+              )}
+            </label>
+            <br />
+
+            <label htmlFor="specialty">
+              Especialidad Actual:
+              {editingEmployee.specialty.map((sp, i) => (
+                <p key={i}>{sp}</p>
+              ))}
+              Nuevas Especialidades *Si deseas Añadir, debes incluir las anteriores*:
+              <input
+                type="text"
+                id="specialty"
+                placeholder="Separa las especialidades con comas! "
+                {...registerEdit("specialty", {
+                  //required: "No has introducido ninguna especialidad",
+                  pattern: {
+                    value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s,]+$/,
+                    message: "No puede contener Numeros",
+                  },
+                  /*validate: (value) =>
+                    value.trim().length >= 2 || "No pueden ser solo espacios",*/
+                })}
+              />
+              {errorsEdit.specialty && (
+                <p style={{ color: "red" }}> {errorsEdit.specialty.message}</p>
+              )}
+            </label>
+            <br />
+            <button type="submit">Editar Empleado</button>
+            <button type="button" onClick={() => setEditingEmployee(null)}>
+              Cancelar
+            </button>
+          </form>
+        </section>
+      )}
+
+      {/* Formulario Para La Creacion De Nuevos Empleados*/}
+
       <section>
         <h3>Creacion De Nuevos Empleados</h3>
-        <form onSubmit={handleSubmit(createSubmit)}>
+        <form onSubmit={handleCreate(createSubmit)}>
           {/* Campo Nombre */}
           <label htmlFor="name">
             Nombre Usuario:
@@ -142,7 +247,7 @@ const AdminEmployees = () => {
               placeholder="Alex Garcia..."
               type="text"
               id="name"
-              {...register("name", {
+              {...registerCreate("name", {
                 required: "El nombre es Obligatorio",
                 minLength: {
                   value: 2,
@@ -156,8 +261,8 @@ const AdminEmployees = () => {
                   value.trim().length >= 2 || "No pueden ser solo espacios",
               })}
             />
-            {errors.name && (
-              <p style={{ color: "red" }}> {errors.name.message}</p>
+            {errorsCreate.name && (
+              <p style={{ color: "red" }}> {errorsCreate.name.message}</p>
             )}
           </label>
 
@@ -169,7 +274,7 @@ const AdminEmployees = () => {
               type="text"
               id="specialty"
               placeholder="Separa las especialidades con comas! "
-              {...register("specialty", {
+              {...registerCreate("specialty", {
                 required: "No has introducido ninguna especialidad",
                 pattern: {
                   value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s,]+$/,
@@ -179,8 +284,8 @@ const AdminEmployees = () => {
                   value.trim().length >= 2 || "No pueden ser solo espacios",
               })}
             />
-            {errors.specialty && (
-              <p style={{ color: "red" }}> {errors.specialty.message}</p>
+            {errorsCreate.specialty && (
+              <p style={{ color: "red" }}> {errorsCreate.specialty.message}</p>
             )}
           </label>
           <button type="submit">Crear Nuevo Empleado</button>
@@ -191,21 +296,6 @@ const AdminEmployees = () => {
 };
 
 export default AdminEmployees;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 

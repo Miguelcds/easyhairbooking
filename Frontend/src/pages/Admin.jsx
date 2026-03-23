@@ -137,6 +137,10 @@ const Admin = () => {
         <h3>Gestiona Tus Empleado - Altas - Bajas - Ediciones </h3>
         <button onClick={() => navigate("/adminEmpoyees")}>Gestion Empleados</button>
       </section>
+
+      <section>
+        
+      </section>
     </>
   );
 };

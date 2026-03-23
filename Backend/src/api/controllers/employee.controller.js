@@ -4,7 +4,7 @@ const Employee = require("../models/employee.model");
 
 const getEmployees = async (req, res) => {
   try {
-    const employees = await Employee.find();
+    const employees = await Employee.find({ active: true });
 
     if (!employees.length) {
       return res
