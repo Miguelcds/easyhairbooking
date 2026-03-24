@@ -90,7 +90,7 @@ const autoCreateSlot = async (req, res) => {
 
         slots.push({ employee_id, date, hour: finalHour });
 
-        actualHour += intervalMinutes;
+        actualHour += +intervalMinutes;
       }
     }
 

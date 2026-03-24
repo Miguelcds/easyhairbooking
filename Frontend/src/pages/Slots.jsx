@@ -7,9 +7,6 @@ const Slots = () => {
   // Recoger de la URL el ID del trabajador
   const { employeeId } = useParams();
 
-  //
-
-  //const today = new Date().toISOString().split("T")[0];
 
   // Variable que recoge la fecha seleccionada por el usuario
   const [date, setDate] = useState(null);

@@ -17,4 +17,32 @@ export const getSlotsService = async (employeeId, date) => {
   }
 };
 
+export const createSlotsService = async (data) => {
+  try {
+  
+    const result = await axiosClient.post(`/slot`, data )
+
+    return result.data
+
+  } catch (error) {
+    console.error(error);
+    throw error
+  }
+};
+
+
+export const autoCreateSlotsService = async (data) => {
+  try {
+  
+    const result = await axiosClient.post(`/slot/autoCreate`, data )
+
+    return result.data
+
+  } catch (error) {
+    console.error(error);
+    throw error
+  }
+};
+
+
 

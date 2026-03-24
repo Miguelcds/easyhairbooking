@@ -31,6 +31,10 @@ const Book = () => {
 
   const submit = async (e) => {
     e.preventDefault();
+    const confirm = window.confirm(
+      "¿Estás seguro de que quieres solicitar esta cita?",
+    );
+    if (!confirm) return;
     try {
       await bookAppointmentService({
         slot_id: slotId,
@@ -79,7 +83,6 @@ const Book = () => {
             {["cortar", "mechas", "peinar", "especial", "barba", "otro"].map(
               (s) => (
                 <label key={s}>
-                    
                   <input
                     type="checkbox"
                     value={s}
@@ -96,17 +99,29 @@ const Book = () => {
               ),
             )}
             <button type="submit">Confirmar</button>
-            <button onClick={() => navigate("/dashboard")}>Cancelar</button>
+            <button type="button"
+              onClick={() => {
+                const confirm = window.confirm(
+                  "¿Estás seguro de que quieres salir?",
+                );
+                if (!confirm) return;
+                return navigate("/dashboard");
+              }}
+            >
+              Cancelar
+            </button>
           </form>
           <section>
-            <ul> 
+            <ul>
               <li>✂️ Cortar — 15€</li>
               <li>🎨 Mechas — 30€</li>
               <li>💇 Solo Peinar — 7€</li>
               <li>⭐ Sesión Especial — 40€</li>
               <li>🪒 Barba — 10€</li>
               <li>❓ Otro — Precio a consultar</li>
-            </ul> Tenga en cuenta que los precion pueden Variar, tan solo es una estimacion
+            </ul>{" "}
+            Tenga en cuenta que los precion pueden Variar, tan solo es una
+            estimacion
           </section>
         </div>
       )}
