@@ -1,25 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import {
-  getAdminAppointmentsService,
-  changeAppointmentService,
-} from "../services/appointment.service";
+import { useEffect, useState } from "react";
+import {getAdminAppointmentsService,changeAppointmentService} from "../services/appointment.service";
 
 const Admin = () => {
-  const { logout } = useAuth();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate("/login");
-  };
 
   const [dates, setDates] = useState([]);
 
   const today = new Date().toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(today);
 
-  const navigate = useNavigate();
 
   useEffect(() => {
     const allDate = async () => {
@@ -100,7 +88,6 @@ const Admin = () => {
     <>
       <div>
         <h1>Panel Admin</h1>
-        <button onClick={handleLogout}>Logout</button>
       </div>
 
       <section>
@@ -164,20 +151,6 @@ const Admin = () => {
         ) : (
           <p>No Tienes Pendientes de Aprobar</p>
         )}
-      </section>
-
-      <section>
-        <h3>Gestiona Tus Empleado - Altas - Bajas - Ediciones </h3>
-        <button onClick={() => navigate("/admin/employees")}>
-          Gestion Empleados
-        </button>
-      </section>
-
-      <section>
-         <h3>Gestiona los Slots por empleado </h3>
-        <button onClick={() => navigate("/admin/slots")}>
-          Gestion de Slots
-        </button>
       </section>
     </>
   );
