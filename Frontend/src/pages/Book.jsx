@@ -2,9 +2,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { bookAppointmentService } from "../services/appointment.service";
 import { useState } from "react";
 import "../styles/Book.css";
-import {SERVICES} from "../data/servicesData"
-import {calculatePrice} from "../utils/calculatePrices"
-
+import { SERVICES } from "../data/servicesData";
+import { calculatePrice } from "../utils/calculatePrices";
 
 const Book = () => {
   const { slotId } = useParams();
@@ -17,7 +16,7 @@ const Book = () => {
 
   const toggleService = (val) => {
     setService((prev) =>
-      prev.includes(val) ? prev.filter((s) => s !== val) : [...prev, val]
+      prev.includes(val) ? prev.filter((s) => s !== val) : [...prev, val],
     );
   };
 
@@ -35,10 +34,13 @@ const Book = () => {
         service: service.join(", "),
         price,
       });
-      setErrorMsg(null)
+      setErrorMsg(null);
       setSuccess(true);
     } catch (error) {
-      setErrorMsg(error.response?.data?.error || "Algo salió mal. Llámanos al 944 678 534.");
+      setErrorMsg(
+        error.response?.data?.error ||
+          "Algo salió mal. Llámanos al 944 678 534.",
+      );
     }
   };
 
@@ -47,20 +49,25 @@ const Book = () => {
       <section className="book__hero">
         <div className="container">
           <p className="text-eyebrow">Paso 3 de 3</p>
-          <h1 className="book__title">Confirmar <em>Reserva</em></h1>
+          <h1 className="book__title">
+            Confirmar <em>Reserva</em>
+          </h1>
           <div className="section-header__divider" />
         </div>
       </section>
 
       <section className="book__content section">
         <div className="container">
-          {errorMsg && <div className="alert alert--error book__alert">{errorMsg}</div>}
+          {errorMsg && (
+            <div className="alert alert--error book__alert">{errorMsg}</div>
+          )}
 
           {success ? (
             <div className="book__success">
               <h2 className="book__success-title">¡Cita Solicitada!</h2>
               <p className="book__success-text">
-                Tu cita ha sido registrada. En breve prodrás visulizar la confirmacion en el Dasboard.
+                Tu cita ha sido registrada. En breve prodrás visulizar la
+                confirmacion en el Dasboard.
               </p>
               <div className="book__success-summary">
                 <p className="text-eyebrow">Has elegido</p>
@@ -78,7 +85,10 @@ const Book = () => {
                   {price > 0 ? `Estimado: ${price}€` : "Precio a consultar"}
                 </p>
               </div>
-              <button className="btn btn--primary" onClick={() => navigate("/dashboard")}>
+              <button
+                className="btn btn--primary"
+                onClick={() => navigate("/dashboard")}
+              >
                 Ver mis citas
               </button>
             </div>
@@ -86,7 +96,9 @@ const Book = () => {
             <div className="book__layout">
               {/* Formulario */}
               <div className="book__form-section">
-                <h2 className="book__section-heading">Servicios - Puedes elegir varios:</h2>
+                <h2 className="book__section-heading">
+                  Servicios - Puedes elegir varios:
+                </h2>
                 <form onSubmit={submit}>
                   <div className="book__services">
                     {SERVICES.map((svc) => (
@@ -115,7 +127,8 @@ const Book = () => {
                       type="button"
                       className="btn btn--ghost"
                       onClick={() => {
-                        if (window.confirm("¿Salir sin reservar?")) navigate("/employees");
+                        if (window.confirm("¿Salir sin reservar?"))
+                          navigate("/employees");
                       }}
                     >
                       Cancelar
@@ -129,7 +142,9 @@ const Book = () => {
                 <p className="text-eyebrow">Resumen</p>
                 <div className="book__summary-card">
                   {service.length === 0 ? (
-                    <p className="book__summary-empty">Selecciona servicios para ver el precio estimado</p>
+                    <p className="book__summary-empty">
+                      Selecciona servicios para ver el precio estimado
+                    </p>
                   ) : (
                     <>
                       {service.map((s) => {
