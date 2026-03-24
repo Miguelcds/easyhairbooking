@@ -27,9 +27,10 @@ const Nav = () => {
   };
 
   return (
-    <header className={`navbar ${scrolled ? "navbar--scrolled" : "navbar--transparent"}`}>
+    <header
+      className={`navbar ${scrolled ? "navbar--scrolled" : "navbar--transparent"}`}
+    >
       <div className="navbar__inner">
-
         {/* Logo */}
         <NavLink to="/" className="navbar__logo">
           Easy<em>Hair</em>
@@ -39,13 +40,29 @@ const Nav = () => {
         <nav className="navbar__links">
           {withOutLogin && (
             <>
-              <NavLink to="/" end className={({ isActive }) => `navbar__link ${isActive ? "active" : ""}`}>
+              <NavLink
+                to="/"
+                end
+                className={({ isActive }) =>
+                  `navbar__link ${isActive ? "active" : ""}`
+                }
+              >
                 Home
               </NavLink>
-              <NavLink to="/login" className={({ isActive }) => `navbar__link ${isActive ? "active" : ""}`}>
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  `navbar__link ${isActive ? "active" : ""}`
+                }
+              >
                 Login
               </NavLink>
-              <NavLink to="/register" className={({ isActive }) => `navbar__link ${isActive ? "active" : ""}`}>
+              <NavLink
+                to="/register"
+                className={({ isActive }) =>
+                  `navbar__link ${isActive ? "active" : ""}`
+                }
+              >
                 <span className="btn btn--primary btn--sm">Reservar</span>
               </NavLink>
             </>
@@ -53,32 +70,69 @@ const Nav = () => {
 
           {withRoleUser && (
             <>
-              <NavLink to="/dashboard" className={({ isActive }) => `navbar__link ${isActive ? "active" : ""}`}>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
+                  `navbar__link ${isActive ? "active" : ""}`
+                }
+              >
                 Dashboard
               </NavLink>
-              <NavLink to="/employees" className={({ isActive }) => `navbar__link ${isActive ? "active" : ""}`}>
+              <NavLink
+                to="/employees"
+                className={({ isActive }) =>
+                  `navbar__link ${isActive ? "active" : ""}`
+                }
+              >
                 Reservar Cita
               </NavLink>
-              <button className="navbar__link navbar__logout" onClick={handleLogout}>
+              <button
+                className="navbar__link navbar__logout"
+                onClick={handleLogout}
+              >
                 Salir
               </button>
             </>
           )}
 
           {withRoleAdmin && (
-            <><NavLink to="/dashboard" className={({ isActive }) => `navbar__link ${isActive ? "active" : ""}`}>
-                Panel Cliente 
+            <>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
+                  `navbar__link ${isActive ? "active" : ""}`
+                }
+              >
+                Panel Cliente
               </NavLink>
-              <NavLink to="/admin" className={({ isActive }) => `navbar__link ${isActive ? "active" : ""}`}>
+              <NavLink
+                to="/admin"
+                className={({ isActive }) =>
+                  `navbar__link ${isActive ? "active" : ""}`
+                }
+              >
                 Panel Admin
               </NavLink>
-              <NavLink to="/admin/employees" className={({ isActive }) => `navbar__link ${isActive ? "active" : ""}`}>
+              <NavLink
+                to="/admin/employees"
+                className={({ isActive }) =>
+                  `navbar__link ${isActive ? "active" : ""}`
+                }
+              >
                 Empleados
               </NavLink>
-              <NavLink to="/admin/slots" className={({ isActive }) => `navbar__link ${isActive ? "active" : ""}`}>
+              <NavLink
+                to="/admin/slots"
+                className={({ isActive }) =>
+                  `navbar__link ${isActive ? "active" : ""}`
+                }
+              >
                 Slots
               </NavLink>
-              <button className="navbar__link navbar__logout" onClick={handleLogout}>
+              <button
+                className="navbar__link navbar__logout"
+                onClick={handleLogout}
+              >
                 Salir
               </button>
             </>
@@ -98,27 +152,88 @@ const Nav = () => {
       </div>
 
       {/* Mobile menu */}
-      <div className={`navbar__mobile ${menuOpen ? "navbar__mobile--open" : ""}`}>
+      <div
+        className={`navbar__mobile ${menuOpen ? "navbar__mobile--open" : ""}`}
+      >
         {withOutLogin && (
           <>
-            <NavLink to="/" end className="navbar__mobile-link" onClick={() => setMenuOpen(false)}>Home</NavLink>
-            <NavLink to="/login" className="navbar__mobile-link" onClick={() => setMenuOpen(false)}>Login</NavLink>
-            <NavLink to="/register" className="navbar__mobile-link" onClick={() => setMenuOpen(false)}>Reservar</NavLink>
+            <NavLink
+              to="/"
+              end
+              className="navbar__mobile-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              Home
+            </NavLink>
+            <NavLink
+              to="/login"
+              className="navbar__mobile-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              Login
+            </NavLink>
+            <NavLink
+              to="/register"
+              className="navbar__mobile-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              Reservar
+            </NavLink>
           </>
         )}
         {withRoleUser && (
           <>
-            <NavLink to="/dashboard" className="navbar__mobile-link" onClick={() => setMenuOpen(false)}>Dashboard</NavLink>
-            <NavLink to="/employees" className="navbar__mobile-link" onClick={() => setMenuOpen(false)}>Reservar Cita</NavLink>
-            <button className="navbar__mobile-link navbar__logout" onClick={handleLogout}>Salir</button>
+            <NavLink
+              to="/dashboard"
+              className="navbar__mobile-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              Dashboard
+            </NavLink>
+            <NavLink
+              to="/employees"
+              className="navbar__mobile-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              Reservar Cita
+            </NavLink>
+            <button
+              className="navbar__mobile-link navbar__logout"
+              onClick={handleLogout}
+            >
+              Salir
+            </button>
           </>
         )}
         {withRoleAdmin && (
           <>
-            <NavLink to="/admin" className="navbar__mobile-link" onClick={() => setMenuOpen(false)}>Panel</NavLink>
-            <NavLink to="/admin/employees" className="navbar__mobile-link" onClick={() => setMenuOpen(false)}>Empleados</NavLink>
-            <NavLink to="/admin/slots" className="navbar__mobile-link" onClick={() => setMenuOpen(false)}>Slots</NavLink>
-            <button className="navbar__mobile-link navbar__logout" onClick={handleLogout}>Salir</button>
+            <NavLink
+              to="/admin"
+              className="navbar__mobile-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              Panel
+            </NavLink>
+            <NavLink
+              to="/admin/employees"
+              className="navbar__mobile-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              Empleados
+            </NavLink>
+            <NavLink
+              to="/admin/slots"
+              className="navbar__mobile-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              Slots
+            </NavLink>
+            <button
+              className="navbar__mobile-link navbar__logout"
+              onClick={handleLogout}
+            >
+              Salir
+            </button>
           </>
         )}
       </div>
