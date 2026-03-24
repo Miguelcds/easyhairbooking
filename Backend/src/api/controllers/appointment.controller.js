@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 const Appointment = require("../models/appointment.model");
 const Slot = require("../models/slot.model");
 
-
-
 // Reservar
 
 const bookAppointment = async (req, res) => {
@@ -17,8 +15,14 @@ const bookAppointment = async (req, res) => {
 
     const actualState = await Slot.findById(slot_id, null, { session });
 
+    if (!actualState) {
+      return res.status(404).json({ error: "Slot no encontrado" });
+    }
+
     if (!actualState.isAvailable) {
-      return res.status(400).json({error:"La Reserva ya no esta disponible"});
+      return res
+        .status(400)
+        .json({ error: "La Reserva ya no esta disponible" });
     }
 
     const slot = await Slot.findByIdAndUpdate(
@@ -42,8 +46,6 @@ const bookAppointment = async (req, res) => {
     res
       .status(201)
       .json({ "Cita Creada con los siguientes datos: ": appointment });
-
-    
   } catch (error) {
     await session.abortTransaction();
     res.status(500).json({ error: "Error Creando la Cita" });
@@ -77,9 +79,7 @@ const changeAppointment = async (req, res) => {
           $set: { state: "confirmed" },
         });
         return res.status(200).json("Confirmado con Exito");
-
       } else {
-
         await Slot.findByIdAndUpdate(slot_id, {
           $set: { isAvailable: true },
         });
@@ -99,47 +99,51 @@ const changeAppointment = async (req, res) => {
 
 const getAppointmentsClient = async (req, res) => {
   try {
-
     const id = req.user._id;
 
     const appointment = await Appointment.find({
-      client_id: id
-    }).populate("client_id", "name email").populate({path: "slot_id", populate: { path: "employee_id", select: "name specialty"}})
+      client_id: id,
+    })
+      .populate("client_id", "name email")
+      .populate({
+        path: "slot_id",
+        populate: { path: "employee_id", select: "name specialty" },
+      });
 
-    if(!appointment.length){
-      return res
-        .status(400)
-        .json({ error: "No Hay Ninguna Cita" });
+    if (!appointment.length) {
+      return res.status(400).json({ error: "No Hay Ninguna Cita" });
     }
 
-    res.status(200).json(appointment)
-    
+    res.status(200).json(appointment);
   } catch (error) {
-     res.status(500).json({ error: "Error Devolviendo las Citas" });
+    res.status(500).json({ error: "Error Devolviendo las Citas" });
     console.error(error);
   }
-}
+};
 
 const getAppointmentsAdmin = async (req, res) => {
   try {
-
-    const allAppointments = await Appointment.find().populate("client_id", "name email").populate({path: "slot_id", populate: { path: "employee_id", select: "name specialty"}})
+    const allAppointments = await Appointment.find()
+      .populate("client_id", "name email")
+      .populate({
+        path: "slot_id",
+        populate: { path: "employee_id", select: "name specialty" },
+      });
 
     if (!allAppointments.length) {
-      return res
-        .status(400)
-        .json({ error: "No Hay Ninguna Cita" });
+      return res.status(400).json({ error: "No Hay Ninguna Cita" });
     }
 
-    res.status(200).json(allAppointments)
-
+    res.status(200).json(allAppointments);
   } catch (error) {
-     res.status(500).json({ error: "Error Devolviendo las Citas" });
+    res.status(500).json({ error: "Error Devolviendo las Citas" });
     console.error(error);
   }
-}
+};
 
-
-
-
-module.exports = {bookAppointment, changeAppointment, getAppointmentsAdmin, getAppointmentsClient};
+module.exports = {
+  bookAppointment,
+  changeAppointment,
+  getAppointmentsAdmin,
+  getAppointmentsClient,
+};

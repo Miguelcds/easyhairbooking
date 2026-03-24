@@ -127,7 +127,7 @@ const Dashboard = () => {
                         </span>
                       </div>
                     </div>
-                    {e.state == "confirmed" && (
+                    {e.state && (
                       <div className="dashboard__card-footer">
                         <button
                           className="btn btn--danger btn--sm"

@@ -24,7 +24,7 @@ const AdminSlots = () => {
       interval: 0,
       shifts: [
         { start: "09:00", end: "13:00" },
-        { start: "16:00", end: "19:00" },
+        { start: "16:00", end: "20:00" },
       ],
     },
   });
@@ -53,7 +53,7 @@ const AdminSlots = () => {
 
   return (
     <>
-      <div>
+      <div style={{margin: "100px"}}>
         <h3>Creacion Slots Citas </h3>
         {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
         {employeesError &&  <p style={{ color: "red" }}>{employeesError}</p>}
@@ -170,7 +170,7 @@ const AdminSlots = () => {
                 )}
 
                 {fields.length > 1 && (
-                  <button type="button" onClick={() => remove(i)}>
+                  <button style={{color:"red"}} type="button" onClick={() => remove(i)}>
                     Eliminar
                   </button>
                 )}
@@ -178,13 +178,14 @@ const AdminSlots = () => {
             ))}
             <button
               type="button"
+              style={{color:"red", margin:"10px"}}
               onClick={() => append({ start: "", end: "" })}
             >
               + Añadir Franja
             </button>
           </label>
 
-          <button type="submit">Crear Slots Citas</button>
+          <button style={{color:"red"}} type="submit">Crear Slots Citas</button>
         </form>
       </div>
     </>

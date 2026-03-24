@@ -99,7 +99,14 @@ const autoCreateSlot = async (req, res) => {
     res.status(201).json("Todos los Slots Se han creado correctamente");
 
   } catch (error) {
-    res.status(400).json({ error: "Error Creando el Slots" });
+
+  if (error.code === 11000) {
+    return res.status(400).json({
+      error: "Ya existen slots para ese empleado en esa fecha y hora"
+    });
+  }
+
+    res.status(500).json({ error: "Error Creando el Slots" });
     console.log(error);
   }
 };

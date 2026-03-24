@@ -77,7 +77,7 @@ const AdminEmployees = () => {
 
   return (
     <>
-      <div>
+      <div style={{margin: "100px"}}>
         <h2>Panel Gestion Empleados</h2>
         {success === "create" && <p style={{ color: "lightgreen" }}>Usuario Creado Con Exito</p>}
         {success === "change" && <p style={{ color: "lightgreen" }}>Estado Empleado Cambiado Con Exito</p>}
@@ -86,7 +86,7 @@ const AdminEmployees = () => {
         {employeesError && <p style={{ color: "red" }}>Error cargando empleados</p>}
       </div>
 
-      <section>
+      <section style={{margin: "100px"}}>
         {employees.length > 0 ? (
           <div>
             <h3>Estado Empleados</h3>
@@ -109,7 +109,7 @@ const AdminEmployees = () => {
       </section>
 
       {editingEmployee && (
-        <section>
+        <section style={{margin: "100px"}}>
           <form onSubmit={handleEdit(editSubmit)}>
             <label htmlFor="name">
               Nombre Actual: <p>{editingEmployee.name}</p>
@@ -141,7 +141,7 @@ const AdminEmployees = () => {
         </section>
       )}
 
-      <section>
+      <section style={{margin: "100px"}}>
         <h3>Creacion De Nuevos Empleados</h3>
         <form onSubmit={handleCreate(createSubmit)}>
           <label htmlFor="name">

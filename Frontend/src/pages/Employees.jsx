@@ -27,7 +27,7 @@ const Employees = () => {
             Elige tu <em>Maestro</em>
           </h1>
           <p className="employees__subtitle">
-            Cada barbero es un artesano con años de experiencia.
+            Cada peluquero es un artesano con años de experiencia.
             Elige el tuyo y reserva tu cita.
           </p>
           <div className="section-header__divider" />
