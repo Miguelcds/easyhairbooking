@@ -1,30 +1,15 @@
-import { useEffect, useState } from "react";
-import { getEmployeesService } from "../services/employee.service";
+import { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { autoCreateSlotsService } from "../services/slot.service";
+import useEmployees from "../hooks/useEmployees";
 
 const AdminSlots = () => {
-  const [employees, setEmployees] = useState([]);
 
   const [errorMsg, setErrorMsg] = useState(null);
 
   const [success, setSuccess] = useState(false);
 
-  
-
-  useEffect(() => {
-    const getEmployees = async () => {
-      try {
-        const result = await getEmployeesService();
-        setEmployees(result);
-        setErrorMsg(null);
-      } catch (error) {
-        console.error(error);
-        setErrorMsg(error);
-      }
-    };
-    getEmployees();
-  }, []);
+  const {employees,  errorMsg: employeesError} = useEmployees()
 
   const {
     register,
@@ -71,6 +56,7 @@ const AdminSlots = () => {
       <div>
         <h3>Creacion Slots Citas </h3>
         {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
+        {employeesError &&  <p style={{ color: "red" }}>{employeesError}</p>}
         {success && (
           <div>
             <h2>Citas Añadidas Correctamente ✅</h2>
