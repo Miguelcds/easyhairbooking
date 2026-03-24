@@ -1,63 +1,27 @@
-import { useEffect, useState } from "react";
-
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-
-import {
-  toggleEmployeeService,
-  editEmployeeService,
-  createEmployeeService,
-  getEmployeesService,
-} from "../services/employee.service";
+import {toggleEmployeeService,editEmployeeService,createEmployeeService} from "../services/employee.service";
+import useEmployees from "../hooks/useEmployees";
 
 const AdminEmployees = () => {
+  const {employees, refreshEmployees, errorMsg: employeesError} = useEmployees(true);
   const [errorMsg, setErrorMsg] = useState(null);
-
   const [success, setSuccess] = useState("");
-
-  const [employees, setEmployees] = useState([]);
-
   const [editingEmployee, setEditingEmployee] = useState(null);
 
-  const refreshEmployees = async () => {
-    try {
-      const result = await getEmployeesService();
-      setEmployees(result);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    const getEmployees = async () => {
-      try {
-        const result = await getEmployeesService();
-        setEmployees(result);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getEmployees();
-  }, []);
-
-  // Formulario Para crear Nuevos Empleados
   const {
     register: registerCreate,
     handleSubmit: handleCreate,
     formState: { errors: errorsCreate },
     reset: resetCreate,
-  } = useForm({
-    defaultValues: { name: "", specialty: "" },
-  });
+  } = useForm({ defaultValues: { name: "", specialty: "" } });
 
-  // Formulario Para editar Empleado
   const {
     register: registerEdit,
     handleSubmit: handleEdit,
     formState: { errors: errorsEdit },
     reset: resetEdit,
-  } = useForm({
-    defaultValues: { name: "", specialty: "" },
-  });
+  } = useForm({ defaultValues: { name: "", specialty: "" } });
 
   const createSubmit = async (data) => {
     try {
@@ -67,6 +31,7 @@ const AdminEmployees = () => {
         active: true,
       });
       setSuccess("create");
+      setErrorMsg(null);
       resetCreate();
       refreshEmployees();
     } catch (error) {
@@ -75,12 +40,8 @@ const AdminEmployees = () => {
     }
   };
 
-  // Edicion Empleado
-
   const editSubmit = async (data) => {
-    const confirm = window.confirm(
-      "¿Estás seguro de que quieres editar a este empleado?",
-    );
+    const confirm = window.confirm("¿Estás seguro de que quieres editar a este empleado?");
     if (!confirm) return;
     try {
       await editEmployeeService(editingEmployee.id, {
@@ -91,7 +52,7 @@ const AdminEmployees = () => {
       });
       setErrorMsg(null);
       setSuccess("edit");
-      resetEdit()
+      resetEdit();
       setEditingEmployee(null);
       refreshEmployees();
     } catch (error) {
@@ -101,12 +62,8 @@ const AdminEmployees = () => {
   };
 
   const toggleEmployee = async (id) => {
-    const confirm = window.confirm(
-      "¿Estás seguro de que quieres cambiar de estado al Empleado?",
-    );
+    const confirm = window.confirm("¿Estás seguro de que quieres cambiar el estado del empleado?");
     if (!confirm) return;
-
-
     try {
       await toggleEmployeeService(id);
       setErrorMsg(null);
@@ -122,19 +79,13 @@ const AdminEmployees = () => {
     <>
       <div>
         <h2>Panel Gestion Empleados</h2>
-        {success === "create" && (
-          <p style={{ color: "lightgreen" }}>Usuario Creado Con Exito</p>
-        )}
-        {success === "change" && (
-          <p style={{ color: "lightgreen" }}>
-            Estado Empleado Cambiado Con Exito
-          </p>
-        )}
-        {success === "edit" && (
-          <p style={{ color: "lightgreen" }}>Empleado Editado Con Exito</p>
-        )}
-        {errorMsg && <p style={{ color: "red" }}> {errorMsg}</p>}
+        {success === "create" && <p style={{ color: "lightgreen" }}>Usuario Creado Con Exito</p>}
+        {success === "change" && <p style={{ color: "lightgreen" }}>Estado Empleado Cambiado Con Exito</p>}
+        {success === "edit" && <p style={{ color: "lightgreen" }}>Empleado Editado Con Exito</p>}
+        {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
+        {employeesError && <p style={{ color: "red" }}>Error cargando empleados</p>}
       </div>
+
       <section>
         {employees.length > 0 ? (
           <div>
@@ -144,149 +95,77 @@ const AdminEmployees = () => {
                 <li key={e._id}>
                   <p>Nombre: {e.name}</p>
                   <p>Estado: {e.active ? <span>En Activo</span> : <span>De Baja</span>}</p>
-                  <button onClick={() => toggleEmployee(e._id)}>
-                    Cambiar Estado
-                  </button>
-                  <button
-                    onClick={() => {
-                      setEditingEmployee({
-                        id: e._id,
-                        name: e.name,
-                        specialty: e.specialty,
-                      });
-                    }}
-                  >
-                    Editar{" "}
+                  <button onClick={() => toggleEmployee(e._id)}>Cambiar Estado</button>
+                  <button onClick={() => setEditingEmployee({ id: e._id, name: e.name, specialty: e.specialty })}>
+                    Editar
                   </button>
                 </li>
               ))}
             </ul>
-            {errorMsg && <p style={{ color: "red" }}> {errorMsg}</p>}
           </div>
         ) : (
-          <p> No Tienes Empleado</p>
+          <p>No Tienes Empleados</p>
         )}
       </section>
-
-      {/* Formulario Para Edicion De Empleados */}
 
       {editingEmployee && (
         <section>
           <form onSubmit={handleEdit(editSubmit)}>
             <label htmlFor="name">
-              Nombre Acutal Usuario:
-              <p>{editingEmployee.name} </p>
-              <p>Nuevo Nombre:</p>
-              <input
-                placeholder="Alex Garcia..."
-                type="text"
-                id="name"
+              Nombre Actual: <p>{editingEmployee.name}</p>
+              Nuevo Nombre:
+              <input placeholder="Alex Garcia..." type="text" id="name"
                 {...registerEdit("name", {
-                  //required: "El nombre es Obligatorio",
-                  minLength: {
-                    value: 2,
-                    message: "Debe tener al menos 2 caracteres",
-                  },
-                  pattern: {
-                    value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/,
-                    message: "No puede contener Numeros",
-                  },
-                  validate: (value) =>
-                    value.trim().length >= 2 || "No pueden ser solo espacios",
+                  minLength: { value: 2, message: "Debe tener al menos 2 caracteres" },
+                  pattern: { value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/, message: "No puede contener números" },
                 })}
               />
-              <br />
-              {errorsEdit.name && (
-                <p style={{ color: "red" }}> {errorsEdit.name.message}</p>
-              )}
+              {errorsEdit.name && <p style={{ color: "red" }}>{errorsEdit.name.message}</p>}
             </label>
             <br />
-
             <label htmlFor="specialty">
               Especialidad Actual:
-              {editingEmployee.specialty.map((sp, i) => (
-                <p key={i}>{sp}</p>
-              ))}
-              Nuevas Especialidades *Si deseas Añadir, debes incluir las anteriores*:
-              <input
-                type="text"
-                id="specialty"
-                placeholder="Separa las especialidades con comas! "
+              {editingEmployee.specialty.map((sp, i) => <p key={i}>{sp}</p>)}
+              Nuevas Especialidades:
+              <input type="text" id="specialty" placeholder="Separa con comas"
                 {...registerEdit("specialty", {
-                  //required: "No has introducido ninguna especialidad",
-                  pattern: {
-                    value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s,]+$/,
-                    message: "No puede contener Numeros",
-                  },
-                  /*validate: (value) =>
-                    value.trim().length >= 2 || "No pueden ser solo espacios",*/
+                  pattern: { value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s,]+$/, message: "No puede contener números" },
                 })}
               />
-              {errorsEdit.specialty && (
-                <p style={{ color: "red" }}> {errorsEdit.specialty.message}</p>
-              )}
+              {errorsEdit.specialty && <p style={{ color: "red" }}>{errorsEdit.specialty.message}</p>}
             </label>
             <br />
             <button type="submit">Editar Empleado</button>
-            <button type="button" onClick={() => setEditingEmployee(null)}>
-              Cancelar
-            </button>
+            <button type="button" onClick={() => setEditingEmployee(null)}>Cancelar</button>
           </form>
         </section>
       )}
 
-      {/* Formulario Para La Creacion De Nuevos Empleados*/}
-
       <section>
         <h3>Creacion De Nuevos Empleados</h3>
         <form onSubmit={handleCreate(createSubmit)}>
-          {/* Campo Nombre */}
           <label htmlFor="name">
-            Nombre Usuario:
-            <input
-              placeholder="Alex Garcia..."
-              type="text"
-              id="name"
+            Nombre:
+            <input placeholder="Alex Garcia..." type="text" id="name"
               {...registerCreate("name", {
-                required: "El nombre es Obligatorio",
-                minLength: {
-                  value: 2,
-                  message: "Debe tener al menos 2 caracteres",
-                },
-                pattern: {
-                  value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/,
-                  message: "No puede contener Numeros",
-                },
-                validate: (value) =>
-                  value.trim().length >= 2 || "No pueden ser solo espacios",
+                required: "El nombre es obligatorio",
+                minLength: { value: 2, message: "Debe tener al menos 2 caracteres" },
+                pattern: { value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/, message: "No puede contener números" },
+                validate: (value) => value.trim().length >= 2 || "No pueden ser solo espacios",
               })}
             />
-            {errorsCreate.name && (
-              <p style={{ color: "red" }}> {errorsCreate.name.message}</p>
-            )}
+            {errorsCreate.name && <p style={{ color: "red" }}>{errorsCreate.name.message}</p>}
           </label>
-
-          {/* Especialidad */}
-
           <label htmlFor="specialty">
             Especialidad:
-            <input
-              type="text"
-              id="specialty"
-              placeholder="Separa las especialidades con comas! "
+            <input type="text" id="specialty" placeholder="Separa con comas"
               {...registerCreate("specialty", {
-                required: "No has introducido ninguna especialidad",
-                pattern: {
-                  value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s,]+$/,
-                  message: "No puede contener Numeros",
-                },
-                validate: (value) =>
-                  value.trim().length >= 2 || "No pueden ser solo espacios",
+                required: "Introduce al menos una especialidad",
+                pattern: { value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s,]+$/, message: "No puede contener números" },
+                validate: (value) => value.trim().length >= 2 || "No pueden ser solo espacios",
               })}
             />
-            {errorsCreate.specialty && (
-              <p style={{ color: "red" }}> {errorsCreate.specialty.message}</p>
-            )}
+            {errorsCreate.specialty && <p style={{ color: "red" }}>{errorsCreate.specialty.message}</p>}
           </label>
           <button type="submit">Crear Nuevo Empleado</button>
         </form>
@@ -296,91 +175,3 @@ const AdminEmployees = () => {
 };
 
 export default AdminEmployees;
-
-/*
-
-
-
-
-<section>
-        <h3>Editar Empleado</h3>
-        {employees.length > 0 ? (
-          <ul>
-            {employees.map((e) => (
-              <li>
-                <form onSubmit={handleSubmit(editSubmit)}>
-                 
-                  <label htmlFor="name">
-                    Nombre Usuario: 
-                    <p>{e.name} </p>
-                    <p>Nuevo Nombre:</p>
-                    <input
-                      placeholder="Alex Garcia..."
-                      type="text"
-                      id="name"
-                      {...register("name", {
-                        required: "El nombre es Obligatorio",
-                        minLength: {
-                          value: 2,
-                          message: "Debe tener al menos 2 caracteres",
-                        },
-                        pattern: {
-                          value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/,
-                          message: "No puede contener Numeros",
-                        },
-                        validate: (value) =>
-                          value.trim().length >= 2 ||
-                          "No pueden ser solo espacios",
-                      })}
-                    />
-                    <br />
-                    {errors.name && (
-                      <p style={{ color: "red" }}> {errors.name.message}</p>
-                    )}
-                  </label>
-
-                 
-
-                  <label htmlFor="specialty">
-                    Especialidad Actual:
-                    {e.specialty.map((sp) => (<p>{sp}</p>))}
-                    Nuevas Especialidades:
-                    <input
-                      type="text"
-                      id="specialty"
-                      placeholder="Separa las especialidades con comas! "
-                      {...register("specialty", {
-                        required: "No has introducido ninguna especialidad",
-                        pattern: {
-                          value: /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s,]+$/,
-                          message: "No puede contener Numeros",
-                        },
-                        validate: (value) =>
-                          value.trim().length >= 2 ||
-                          "No pueden ser solo espacios",
-                      })}
-                    />
-                    {errors.specialty && (
-                      <p style={{ color: "red" }}>
-                        {" "}
-                        {errors.specialty.message}
-                      </p>
-                    )}
-                  </label>
-                  <button type="submit">Editar Empleado</button>
-                </form>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          ""
-        )}
-      </section>
-
-
-
-
-
-
-
-*/

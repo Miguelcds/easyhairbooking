@@ -21,6 +21,18 @@ export const getEmployeesService = async () => {
   }
 };
 
+export const getAllEmployeesService = async () => {
+  try {
+    const result = await axiosClient.get("/employee/all");
+    return result.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+
+
 export const toggleEmployeeService = async (idEmployee) => {
   try {
     const result = await axiosClient.patch(`/employee/${idEmployee}`);

@@ -10,8 +10,8 @@ import PublicRoute from "./components/PublicRoute.jsx";
 import Employees from "./pages/Employees.jsx";
 import Slots from "./pages/Slots.jsx";
 import Book from "./pages/Book.jsx";
-import AdminEmployees from "./pages/AdminEmployees.jsx";
 import AdminSlots from "./pages/AdminSlots.jsx";
+import AdminEmployees from "./pages/AdminEmployees.jsx";
 
 function App() {
   return (

@@ -1,6 +1,6 @@
 const Employee = require("../models/employee.model");
 
-// GET Ruta Obtener Todos Empleados
+// GET Ruta Obtener Todos Empleados Usuario, solo vera los Activos
 
 const getEmployees = async (req, res) => {
   try {
@@ -8,7 +8,7 @@ const getEmployees = async (req, res) => {
 
     if (!employees.length) {
       return res
-        .status(400)
+        .status(404)
         .json({ error: "No Hay Ningun Empleado en la Base de datos" });
     }
 
@@ -18,6 +18,28 @@ const getEmployees = async (req, res) => {
     console.error(error);
   }
 };
+
+
+// Ruta Para Obtener Empleados Admin, Vera los activos y los no activos
+
+const getAllEmployees = async (req, res) => {
+  try {
+    const employees = await Employee.find();
+
+    if (!employees.length) {
+      return res
+        .status(404)
+        .json({ error: "No Hay Ningun Empleado en la Base de datos" });
+    }
+
+    res.status(200).json(employees);
+  } catch (error) {
+    res.status(500).json({ error: "Error Obteniendo todos los Empleados" });
+    console.error(error);
+  }
+};
+
+
 
 //  POST Modelo Para Crear Empeleados, solo Puede Añadirlo un Admin
 
@@ -87,4 +109,4 @@ const toggleActiveEmployee = async (req, res) => {
   }
 };
 
-module.exports = {getEmployees, createEmployee, editEmployee, toggleActiveEmployee};
+module.exports = {getEmployees,getAllEmployees, createEmployee, editEmployee, toggleActiveEmployee};
