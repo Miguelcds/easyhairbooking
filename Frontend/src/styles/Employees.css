@@ -1,0 +1,150 @@
+/* ============================================================
+   EMPLOYEES PAGE — EasyHairBook
+   ============================================================ */
+
+/* ── Hero ── */
+.employees__hero {
+  padding-top: calc(var(--navbar-height) + var(--space-16));
+  padding-bottom: var(--space-12);
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-secondary) 0%,
+    var(--color-bg-primary) 100%
+  );
+  border-bottom: 1px solid var(--color-border);
+}
+
+.employees__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin-block: var(--space-4) var(--space-5);
+}
+
+.employees__title em {
+  font-style: italic;
+  color: var(--color-gold-primary);
+}
+
+.employees__subtitle {
+  font-size: var(--text-md);
+  color: var(--color-text-muted);
+  max-width: 480px;
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+/* ── Grid ── */
+.employees__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+/* ── Card ── */
+.employees__card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  text-align: center;
+  transition: all var(--transition-elegant);
+  position: relative;
+  overflow: hidden;
+}
+
+/*.employees__card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold-primary), transparent);
+  transform: scaleX(0);
+  transition: transform var(--transition-elegant);
+}*/
+
+.employees__card:hover::before {
+  transform: scaleX(1);
+}
+
+.employees__card:hover {
+  border-color: var(--color-border-gold);
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-4px);
+}
+
+/* ── Avatar ── */
+.employees__avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-elevated),
+    var(--color-bg-surface)
+  );
+  border: 1px solid var(--color-border-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.06);
+  transition: box-shadow var(--transition-elegant);
+}
+
+.employees__card:hover .employees__avatar {
+  box-shadow: 0 0 0 6px rgba(201, 169, 110, 0.1);
+}
+
+.employees__avatar-initials {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--color-gold-primary);
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+/* ── Body ── */
+.employees__card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.employees__name {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.employees__specialties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: center;
+}
+
+/* ── CTA ── */
+.employees__cta {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .employees__grid {
+    grid-template-columns: 1fr;
+  }
+}

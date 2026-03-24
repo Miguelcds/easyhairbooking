@@ -66,9 +66,11 @@ const Nav = () => {
           )}
 
           {withRoleAdmin && (
-            <>
+            <><NavLink to="/dashboard" className={({ isActive }) => `navbar__link ${isActive ? "active" : ""}`}>
+                Panel Cliente 
+              </NavLink>
               <NavLink to="/admin" className={({ isActive }) => `navbar__link ${isActive ? "active" : ""}`}>
-                Panel
+                Panel Admin
               </NavLink>
               <NavLink to="/admin/employees" className={({ isActive }) => `navbar__link ${isActive ? "active" : ""}`}>
                 Empleados

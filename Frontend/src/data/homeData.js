@@ -42,3 +42,9 @@ export const reasons = [
     body: "Elige tu barbero, fecha y hora desde cualquier dispositivo. Sin llamadas, sin esperas.",
   },
 ];
+
+export const stat = [
+  { value: "500+", label: "Clientes" },
+  { value: "4", label: "Maestros" },
+  { value: "100%", label: "Satisfacción" },
+];

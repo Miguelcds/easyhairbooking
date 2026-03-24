@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import heroBg from "../assets/HomePage.png";
 import sectionBg from "../assets/EasyHairDates.png";
 import "../styles/Home.css";
-import { services, reasons } from "../data/homeData";
+import { services, reasons, stat } from "../data/homeData";
 
 const Home = () => {
   const { user } = useAuth();
@@ -65,7 +65,7 @@ const Home = () => {
 
         <div className="home__hero-content container">
           <p className="text-eyebrow home__hero-eyebrow">
-            ✦ Bilbao · Est. 2024
+            ✦ Bilbao · Since. 2026
           </p>
 
           <h1 className="home__hero-title">
@@ -99,14 +99,10 @@ const Home = () => {
 
           {/* Stats */}
           <div className="home__hero-stats">
-            {[
-              { value: "500+", label: "Clientes" },
-              { value: "4", label: "Maestros" },
-              { value: "100%", label: "Satisfacción" },
-            ].map((stat) => (
-              <div key={stat.label} className="home__stat">
-                <span className="home__stat-value">{stat.value}</span>
-                <span className="home__stat-label">{stat.label}</span>
+            {stat.map((st) => (
+              <div key={st.label} className="home__stat">
+                <span className="home__stat-value">{st.value}</span>
+                <span className="home__stat-label">{st.label}</span>
               </div>
             ))}
           </div>
@@ -165,9 +161,9 @@ const Home = () => {
             <div className="ornament__diamond" />
           </div>
           <blockquote className="home__quote">
-            "El cabello es la corona que nunca te quitas.
+            "Tu pelo es la corona que nunca te quitas.
             <br />
-            <em>Cuídala como merece.</em>"
+            <em>Cuídalo como merece.</em>"
           </blockquote>
           <div className="ornament">
             <div className="ornament__diamond" />
