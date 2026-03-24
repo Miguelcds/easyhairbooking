@@ -13,88 +13,90 @@ import Book from "./pages/Book.jsx";
 import AdminSlots from "./pages/AdminSlots.jsx";
 import AdminEmployees from "./pages/AdminEmployees.jsx";
 import Nav from "./components/Nav.jsx";
+import Footer from "./components/Footer.jsx";
 
 function App() {
   return (
     <>
-      <Nav/>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <PublicRoute>
-                <Register />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              <PrivateRoute allowedRoles={["admin"]}>
-                <Admin />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/employees"
-            element={
-              <PrivateRoute>
-                <Employees allowedRoles={["admin", "client"]} />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/slots/:employeeId"
-            element={
-              <PrivateRoute>
-                <Slots />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/book/:slotId"
-            element={
-              <PrivateRoute>
-                <Book />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/admin/employees"
-            element={
-              <PrivateRoute allowedRoles={["admin"]}>
-                <AdminEmployees />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/admin/slots"
-            element={
-              <PrivateRoute allowedRoles={["admin"]}>
-                <AdminSlots />
-              </PrivateRoute>
-            }
-          />
+      <Nav />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute allowedRoles={["admin"]}>
+              <Admin />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/employees"
+          element={
+            <PrivateRoute>
+              <Employees allowedRoles={["admin", "client"]} />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/slots/:employeeId"
+          element={
+            <PrivateRoute>
+              <Slots />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/book/:slotId"
+          element={
+            <PrivateRoute>
+              <Book />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/employees"
+          element={
+            <PrivateRoute allowedRoles={["admin"]}>
+              <AdminEmployees />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/slots"
+          element={
+            <PrivateRoute allowedRoles={["admin"]}>
+              <AdminSlots />
+            </PrivateRoute>
+          }
+        />
 
-          <Route path="*" element={<h1>Route Not Found</h1>} />
-        </Routes>
+        <Route path="*" element={<h1>Route Not Found</h1>} />
+      </Routes>
+      <Footer />
     </>
   );
 }
