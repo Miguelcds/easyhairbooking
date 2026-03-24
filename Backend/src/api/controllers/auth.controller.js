@@ -86,7 +86,6 @@ const loginUser = async (req, res) => {
 
 const getMe = async (req, res) => {
   res.status(200).json(req.user);
-  res.status(200).json("Sesion cerrada correctamente")
 };
 
 

@@ -1,0 +1,123 @@
+/* ============================================================
+   SLOTS PAGE — EasyHairBook
+   ============================================================ */
+
+.slots__hero {
+  padding-top: calc(var(--navbar-height) + var(--space-16));
+  padding-bottom: var(--space-12);
+  background: linear-gradient(180deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.slots__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin-block: var(--space-4) var(--space-5);
+}
+
+.slots__title em { font-style: italic; color: var(--color-gold-primary); }
+
+.slots__subtitle {
+  font-size: var(--text-md);
+  color: var(--color-text-muted);
+  font-weight: 300;
+}
+
+/* Date input */
+.slots__date-wrapper {
+  max-width: 320px;
+  margin-bottom: var(--space-10);
+}
+
+.slots__date-input {
+  font-family: var(--font-ui);
+  cursor: pointer;
+}
+
+.slots__alert {
+  margin-bottom: var(--space-8);
+}
+
+/* Results */
+.slots__results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.slots__results-label {
+  margin-bottom: var(--space-2);
+}
+
+/* Grid de slots */
+.slots__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: var(--space-3);
+}
+
+.slots__slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-3);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-elegant);
+}
+
+.slots__slot:hover {
+  border-color: var(--color-gold-primary);
+  background: rgba(201, 169, 110, 0.06);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-gold);
+}
+
+.slots__slot-hour {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.slots__slot-label {
+  font-family: var(--font-ui);
+  font-size: 0.6rem;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-gold-primary);
+}
+
+/* Empty state */
+.slots__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-20);
+  text-align: center;
+}
+
+.slots__empty-icon { font-size: 2.5rem; opacity: 0.3; }
+
+.slots__empty-text {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-disabled);
+  text-transform: uppercase;
+}
+
+@media (max-width: 480px) {
+  .slots__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 380px) {
+  .slots__grid { grid-template-columns: repeat(2, 1fr); }
+}
