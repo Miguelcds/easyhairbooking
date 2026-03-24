@@ -101,8 +101,9 @@ app.use("/api/v1/appointment", appointmentRouter)
 
 // Las Rutas Sin Respuesta Seran Redirigidas
 
-app.use((req,res) => {
-    res.status(404).json({error:"Route Not Found"});
+app.use((req,res, next) => {
+    if (res.headersSent) return next()
+    res.status(404).json({ error: "Route Not Found" })
 })
 
 // Las Funcioes que lancen algun Error

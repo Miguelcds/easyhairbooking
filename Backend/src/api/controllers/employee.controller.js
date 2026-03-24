@@ -64,7 +64,7 @@ const editEmployee = async (req, res) => {
     const { id } = req.params;
 
     const updateEmployee = await Employee.findByIdAndUpdate(id, req.body, {
-      new: true,
+      returnDocument: 'after',
       runValidators: true,
     });
 
@@ -97,7 +97,7 @@ const toggleActiveEmployee = async (req, res) => {
         $set: { active: !actualState.active },
       },
       {
-        new: true,
+        returnDocument: 'after',
         runValidators: true,
       },
     );
