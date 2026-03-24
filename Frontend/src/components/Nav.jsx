@@ -1,10 +1,20 @@
-import React from "react";
-import {NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
+  const { user, logout } = useAuth();
 
+  const navigate = useNavigate();
 
-    
+  const withOutLogin = !user;
+  const withRoleUser = user?.role === "client";
+  const withRoleAdmin = user?.role === "admin";
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
 
 
 
@@ -12,25 +22,26 @@ const Nav = () => {
     <>
       {withOutLogin && (
         <nav>
-          <NavLink to="Home">Home</NavLink>
-          <NavLink to="Login">Login</NavLink>
-          <NavLink to="Register">Register</NavLink>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/login">Login</NavLink>
+          <NavLink to="/register">Register</NavLink>
         </nav>
       )}
       {withRoleUser && (
         <nav>
-          <NavLink to="Dashboard">Dashboard</NavLink>
-          <NavLink to="Employees">Citas Disponible</NavLink>
-          <NavLink to="Logout">Cerrar Sesion</NavLink>
+          <NavLink to="/dashboard">Dashboard</NavLink>
+          <NavLink to="/employees">Citas Disponible</NavLink>
+          <button onClick={handleLogout}>Cerrar Sesión</button>
         </nav>
       )}
       {withRoleAdmin && (
         <nav>
-          <NavLink to="Dashboard">Citas Telefonicas</NavLink> {/* Pendiente Implementar, de momento solo puede realizar citas con nombre de admin */}
-          <NavLink to="Admin">Panel Administrador</NavLink>
-          <NavLink to="AdminEmployees">Gestion Empleados</NavLink>
-          <NavLink to="AdminSlots">Creacion Citas</NavLink>
-          <NavLink to="Logout">Cerrar Sesion</NavLink>
+          <NavLink to="/dashboard">Citas Telefonicas</NavLink>{" "}
+          {/* Pendiente Implementar, de momento solo puede realizar citas con nombre de admin */}
+          <NavLink to="/admin">Panel Administrador</NavLink>
+          <NavLink to="/admin/employees">Gestion Empleados</NavLink>
+          <NavLink to="/admin/slots">Creacion Citas</NavLink>
+          <button onClick={handleLogout}>Cerrar Sesión</button>
         </nav>
       )}
     </>

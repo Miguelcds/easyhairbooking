@@ -7,16 +7,13 @@ import {
 } from "../services/appointment.service";
 
 const Dashboard = () => {
-  const { logout, user } = useAuth();
+  const { user } = useAuth();
+
+  const Admin = user.role === "admin"
 
   const [dates, setDates] = useState([]);
 
   const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate("/login");
-  };
 
   useEffect(() => {
     const myDates = async () => {
@@ -55,12 +52,14 @@ const Dashboard = () => {
     <div>
       <h1>Dasboard</h1>
       <h2>Bienvenido, {user.name} </h2>
-      <section>
-        <button onClick={handleLogout}>Logout</button>
-        <button onClick={() => navigate("/employees")}>
+        {Admin && ( 
+          <section>
+          <button onClick={() => navigate("/employees")}>
           Citas Disponibles
         </button>
-      </section>
+        </section>
+        )}
+      
       <section>
         <h3>Citas</h3>
         {activeDates.length > 0  ? (

@@ -14,8 +14,9 @@ const Employees = () => {
           {employees.map((emplo) => (
             <li key={emplo._id}>
               <h3>{emplo.name}</h3>
+              <p>Especialidades: </p>
               {emplo.specialty.map((esp, i) => (
-                <span key={i}>Especialidades: {esp} </span>
+                <span key={i}>{esp} </span>
               ))}
               {/*Envia el  */}
               <button
