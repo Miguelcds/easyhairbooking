@@ -125,7 +125,7 @@ const Home = () => {
             <h2 className="home__section-title">
               Servicios de
               <br />
-              <em>Alta Barbería</em>
+              <em>Alta Calidad</em>
             </h2>
             <div className="section-header__divider" />
           </div>
