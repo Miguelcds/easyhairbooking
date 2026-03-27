@@ -6,10 +6,10 @@ const employeeSchema = new mongoose.Schema(
     name: { type: String, trim: true, required: true, minlength: 2 },
     specialty: {
       type: [String],
-      required: true,
+      required: [true, "Debes añadir al menos una especialidad"],
       validate: {
         validator: function(value) {
-          return value.length > 0
+          return Array.isArray(value) && value.length > 0
         },
         message: "No has introducido Ninguna especialidad"
       },

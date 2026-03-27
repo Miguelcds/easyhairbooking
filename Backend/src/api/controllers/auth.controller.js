@@ -85,15 +85,27 @@ const loginUser = async (req, res) => {
 // Controlador de Token de Sesion
 
 const getMe = async (req, res) => {
-  res.status(200).json(req.user);
+
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    res.status(401).json({error:"Error Localizando al usuario"});
+  }
+  
 };
 
 
 // Logout Para cerrar sesion
 
 const logoutUser = (req, res) => {
-  res.clearCookie("token")
-  res.status(200).json("Sesión cerrada correctamente")
+
+  try {
+    res.clearCookie("token")
+    res.status(200).json("Sesión cerrada correctamente")
+  } catch (error) {
+    res.status(500).json({error:"Error al cerrar sesion"});
+  }
+  
 }
 
 module.exports = { registerUser, loginUser , getMe, logoutUser};
