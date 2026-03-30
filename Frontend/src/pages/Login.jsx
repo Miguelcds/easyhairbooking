@@ -4,7 +4,7 @@ import { loginService } from "../services/auth.service";
 import { useNavigate, NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import heroBg from "../assets/HomePage.png";
-import "../Styles/AuthPages.css";
+import "../styles/AuthPages.css";
 
 const Login = () => {
   const {
