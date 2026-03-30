@@ -17,9 +17,9 @@ const slotSchema = new mongoose.Schema({
  * con el mismo empleado, la misma fecha Y la misma hora simultáneamente.
  *
  * Ejemplo de lo que SÍ permite:
- *   - Empleado A | 2025-03-01 | 10:00  ✅
- *   - Empleado A | 2025-03-01 | 11:00  ✅ (misma fecha pero hora distinta)
- *   - Empleado B | 2025-03-01 | 10:00  ✅ (mismo día y hora pero empleado distinto)
+ *   - Empleado A | 2025-03-01 | 10:00  
+ *   - Empleado A | 2025-03-01 | 11:00   (misma fecha pero hora distinta)
+ *   - Empleado B | 2025-03-01 | 10:00   (mismo día y hora pero empleado distinto)
  *
  * Ejemplo de lo que NO permite:
  *   - Empleado A | 2025-03-01 | 10:00  ✅ (primero)
