@@ -68,8 +68,8 @@ const loginUser = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // En desarrolo false, en produccion true
-      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production", // En desarrolo false, en produccion true
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict", // Indicamos que el Front y el Back estan en dominios diferentes en produccion
       maxAge: 2 * 24 * 60 * 60 * 1000, // 2 dias
     });
 
@@ -100,7 +100,11 @@ const getMe = async (req, res) => {
 const logoutUser = (req, res) => {
 
   try {
-    res.clearCookie("token")
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // En desarrolo false, en produccion true
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict", // Indicamos que el Front y el Back estan en dominios diferentes en produccion
+    })
     res.status(200).json("Sesión cerrada correctamente")
   } catch (error) {
     res.status(500).json({error:"Error al cerrar sesion"});
