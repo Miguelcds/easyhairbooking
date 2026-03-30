@@ -6,7 +6,9 @@ Sistema web de gestión y reserva de citas para una peluquería con múltiples e
 
 ## Demo
 
-> Despliegue en proceso. Repositorio disponible en: [github.com/Miguelcds/easyhairbooking](https://github.com/Miguelcds/easyhairbooking)
+**Frontend:** [https://easyhairbooking.netlify.app](https://easyhairbooking.netlify.app)
+
+**Repositorio:** [github.com/Miguelcds/easyhairbooking](https://github.com/Miguelcds/easyhairbooking)
 
 ---
 
@@ -229,7 +231,7 @@ EasyHairBooking/
 El mayor reto técnico fue implementar la reserva de citas sin posibilidad de dobles reservas simultáneas. Se resolvió usando sesiones y transacciones de Mongoose, que garantizan que la comprobación de disponibilidad y la creación del appointment ocurran como una operación atómica.
 
 **Autenticación con httpOnly cookies**
-Se optó por almacenar el JWT en una httpOnly cookie en lugar de localStorage, lo que elimina la superficie de ataque XSS sobre el token. Requirió configurar correctamente CORS con `credentials: true` tanto en Express como en Axios.
+Se optó por almacenar el JWT en una httpOnly cookie en lugar de localStorage, lo que elimina la superficie de ataque XSS sobre el token. Requirió configurar correctamente CORS con `credentials: true` tanto en Express como en Axios y ajustar `sameSite: "none"` para el correcto funcionamiento entre dominios distintos en producción.
 
 **Arquitectura de roles en frontend y backend**
 Las rutas protegidas se implementan en dos capas: el middleware `isAuth` en el backend verifica el token y el rol en cada petición, mientras que `PrivateRoute` y `PublicRoute` en React gestionan la navegación según el estado de sesión.
@@ -244,7 +246,7 @@ El endpoint `autoCreate` recibe franjas horarias en formato `HH:mm` y las convie
 - Notificaciones por email al confirmar o cancelar una cita
 - Sustitución del polling por WebSockets para actualizaciones en tiempo real en el panel admin
 - Vista de agenda diaria para cada barbero
-- Plataforma multi-negocio con subdominios por barbería
+- Plataforma multi-negocio con subdominios por peluquero
 - Integración con pasarela de pago
 - Aplicación móvil nativa con React Native
 
