@@ -244,7 +244,7 @@ El endpoint `autoCreate` recibe franjas horarias en formato `HH:mm` y las convie
 - Notificaciones por email al confirmar o cancelar una cita
 - Sustitución del polling por WebSockets para actualizaciones en tiempo real en el panel admin
 - Vista de agenda diaria para cada barbero
-- Plataforma multi-negocio con subdominios por barbería
+- Plataforma multi-negocio con subdominios por peluquero
 - Integración con pasarela de pago
 - Aplicación móvil nativa con React Native
 
