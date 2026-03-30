@@ -1,7 +1,6 @@
 # Easy Hair Project
-# EasyHairBook
 
-Sistema web de gestión y reserva de citas para una peluquería con múltiples empleados, aunque esta pensaba para poder adpatarse a varios modelos de negocio, . Permite a los clientes consultar disponibilidad, reservar y gestionar sus citas de forma autónoma, mientras el equipo administrador controla la agenda, los empleados y los horarios desde un panel dedicado.
+Sistema web de gestión y reserva de citas para una peluquería con múltiples empleados, aunque esta pensada para poder adaptarse a varios modelos de negocio. Permite a los clientes consultar disponibilidad, reservar y gestionar sus citas de forma autónoma, mientras el equipo administrador controla la agenda, los empleados y los horarios desde un panel dedicado.
 
 ---
 
@@ -16,7 +15,7 @@ Sistema web de gestión y reserva de citas para una peluquería con múltiples e
 ## Cliente
 
 - Registro y autenticación segura con JWT almacenado en httpOnly cookies
-- Selección de barbero, fecha y franja horaria disponible
+- Selección de peluquero, fecha y franja horaria disponible
 - Reserva de cita con selección de servicios y estimación de precio en tiempo real
 - Panel personal con historial de citas activas y cancelación
 
@@ -39,8 +38,9 @@ Sistema web de gestión y reserva de citas para una peluquería con múltiples e
 ## Tecnologías utilizadas
 
 ### Frontend
+
 | Tecnología | Uso |
-|---|---|
+| --- | --- |
 | React 18 | Biblioteca de UI |
 | Vite | Bundler y entorno de desarrollo |
 | React Router v6 | Enrutamiento y rutas protegidas |
@@ -49,8 +49,9 @@ Sistema web de gestión y reserva de citas para una peluquería con múltiples e
 | CSS Variables | Sistema de diseño propio sin frameworks |
 
 ### Backend
+
 | Tecnología | Uso |
-|---|---|
+| --- | --- |
 | Node.js | Entorno de ejecución |
 | Express | Framework web y API REST |
 | MongoDB | Base de datos documental |
@@ -185,16 +186,18 @@ EasyHairBooking/
 ## Endpoints de la API
 
 ### Autenticación
+
 | Método | Ruta | Acceso |
-|---|---|---|
+| --- | --- | --- |
 | POST | `/api/v1/auth/register` | Público |
 | POST | `/api/v1/auth/login` | Público |
 | POST | `/api/v1/auth/logout` | Autenticado |
 | GET | `/api/v1/auth/me` | Autenticado |
 
 ### Empleados
+
 | Método | Ruta | Acceso |
-|---|---|---|
+| --- | --- | --- |
 | GET | `/api/v1/employee` | Autenticado |
 | GET | `/api/v1/employee/all` | Admin |
 | POST | `/api/v1/employee` | Admin |
@@ -202,15 +205,17 @@ EasyHairBooking/
 | PATCH | `/api/v1/employee/:id` | Admin |
 
 ### Slots
+
 | Método | Ruta | Acceso |
-|---|---|---|
+| --- | --- | --- |
 | GET | `/api/v1/slot?employee=&date=` | Autenticado |
 | POST | `/api/v1/slot` | Admin |
 | POST | `/api/v1/slot/autoCreate` | Admin |
 
 ### Citas
+
 | Método | Ruta | Acceso |
-|---|---|---|
+| --- | --- | --- |
 | GET | `/api/v1/appointment/my` | Cliente |
 | GET | `/api/v1/appointment` | Admin |
 | POST | `/api/v1/appointment` | Cliente |
@@ -247,7 +252,6 @@ El endpoint `autoCreate` recibe franjas horarias en formato `HH:mm` y las convie
 
 ## Autor
 
-**Joao Miguel Costa Da Silva**
-Estudiante de CFGS Desarrollo de Aplicaciones Web
+### Joao Miguel Costa Da Silva
 
 [github.com/Miguelcds](https://github.com/Miguelcds)
